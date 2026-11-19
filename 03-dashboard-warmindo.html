@@ -1,0 +1,1311 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Modul 3: Dashboard Warmindo - Step by Step | Catppuccin Deck</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Catppuccin Latte Design System -->
+  <link rel="stylesheet" href="css/catppuccin-latte.css">
+
+  <style>
+    /* Custom Styling for Step-by-Step Screenshots */
+    .step-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 18px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .aspect-mobile .step-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .step-screenshot {
+      width: 100%;
+      max-height: 52vh;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 6px 22px rgba(76, 79, 105, 0.12);
+      border: 1.5px solid var(--ctp-surface1);
+      background: #ffffff;
+      display: block;
+      margin: 4px auto;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .step-screenshot:hover {
+      transform: scale(1.015);
+      border-color: var(--ctp-blue);
+    }
+
+    .step-screenshot-full {
+      width: 100%;
+      max-height: 54vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(76, 79, 105, 0.15);
+      border: 1.5px solid var(--ctp-surface1);
+      background: #ffffff;
+      display: block;
+      margin: 8px auto;
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.72em;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: rgba(30, 102, 245, 0.12);
+      color: var(--ctp-blue);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .step-card-box {
+      background: var(--ctp-mantle);
+      border: 1px solid var(--ctp-surface1);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Persistent Edge-to-Edge Deck Header -->
+  <header class="deck-header">
+    <div class="deck-header-left">
+      <a href="index.html" class="deck-brand-link" title="Kembali ke Portal Modul Data Analyst">
+        <img src="assets/img/logo_2.webp" alt="Logo ITERA" class="deck-logo">
+        <img src="assets/img/dikti-saintek-berdampak-color.svg" alt="Logo Dikti" class="deck-logo">
+      </a>
+    </div>
+
+    <div class="deck-header-right">
+      <!-- Aspect Ratio / Projector Switcher -->
+      <div class="nav-dropdown">
+        <button type="button" class="deck-ctrl-btn" id="aspect-btn" onclick="toggleAspectDropdown(event)" title="Sesuaikan Rasio Layar & Proyektor">
+          <span class="material-symbols-outlined">aspect_ratio</span>
+          <span id="aspect-label" class="deck-btn-label">Auto</span>
+          <span class="material-symbols-outlined" style="font-size: 14px;">arrow_drop_down</span>
+        </button>
+        <div class="nav-dropdown-menu" id="aspect-menu">
+          <button type="button" class="dropdown-item active" data-aspect="auto" onclick="setAspectMode('auto')">
+            <span class="item-title">Auto</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="16-9" onclick="setAspectMode('16-9')">
+            <span class="item-title">16:9</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="16-10" onclick="setAspectMode('16-10')">
+            <span class="item-title">16:10</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="4-3" onclick="setAspectMode('4-3')">
+            <span class="item-title">4:3</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="mobile" onclick="setAspectMode('mobile')">
+            <span class="item-title">Mobile</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="text-large" onclick="setAspectMode('text-large')">
+            <span class="item-title">Teks Besar</span>
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="deck-ctrl-btn" onclick="Reveal.toggleOverview()" title="Lihat Matriks Seluruh Slide (Esc/O)">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="deck-btn-label">Overview</span>
+      </button>
+      <button type="button" class="deck-ctrl-btn" onclick="openShortcutsModal()" title="Panduan Pintasan Keyboard (?)">
+        <span class="material-symbols-outlined">keyboard</span>
+        <span class="deck-btn-label">Pintasan</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hairline Visual Progress Bar -->
+  <div class="deck-progress-track">
+    <div class="deck-progress-bar" id="deck-progress-bar"></div>
+  </div>
+
+  <!-- Reveal.js Container -->
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: Title Slide -->
+      <section data-topic="Dashboard Warmindo">
+        <div style="margin-bottom: 14px;">
+          <span class="c-badge c-badge-peach">
+            <span class="material-symbols-outlined">ramen_dining</span> Modul 03 &bull; Panduan Visual Step-by-Step
+          </span>
+        </div>
+        <h1>Dashboard Warmindo</h1>
+        <p style="font-size: 1.05em; color: var(--ctp-subtext0); max-width: 860px; margin-bottom: 22px;">
+          Tutorial Praktik Langkah demi Langkah Pembuatan Business Intelligence Warung Indomi di Google Looker Studio dengan Dokumentasi Tangkapan Layar Lengkap.
+        </p>
+        <div class="grid-3" style="max-width: 880px;">
+          <div class="c-card c-card-accent-top c-card-peach">
+            <h4>Penyusun Modul</h4>
+            <p><strong>Hartanto Tantriawan, S.Kom., M.Kom.</strong></p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-blue">
+            <h4>Studi Kasus</h4>
+            <p>Data Dummy Warung Indomi (F&amp;B Retail)</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-teal">
+            <h4>Tools</h4>
+            <p>Google Sheets &amp; Looker Studio</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: Standar SKKNI & Business Intelligence -->
+      <section data-topic="Standar SKKNI &amp; BI">
+        <span class="slide-category-label">Standar Profesi</span>
+        <h2>Business Intelligence &amp; Laporan Analisis</h2>
+        <p>Acuan kompetensi kerja nasional pembuatan dashboard interaktif dan penyusunan laporan.</p>
+
+        <div class="grid-2" style="margin-top: 14px;">
+          <div class="c-card c-card-accent-top c-card-blue">
+            <h3><span class="material-symbols-outlined" style="color:var(--ctp-blue);">hub</span> Business Intelligence (J.62DMS00.015.1)</h3>
+            <ul>
+              <li><strong>Mengumpulkan Data:</strong> Mengidentifikasi sumber data internal/eksternal (penjualan, pelanggan, transaksi operasional).</li>
+              <li><strong>Mengoperasikan Tools BI:</strong> Menggunakan Google Looker Studio untuk visualisasi dinamis dan dashboard interaktif.</li>
+            </ul>
+          </div>
+
+          <div class="c-card c-card-accent-top c-card-teal">
+            <h3><span class="material-symbols-outlined" style="color:var(--ctp-teal);">description</span> Menyusun Laporan (M.70BDA00.013.1)</h3>
+            <ul>
+              <li><strong>Mengolah &amp; Menganalisis:</strong> Menarik pola dan tren tersembunyi dari data mentah.</li>
+              <li><strong>Menyusun Narasi:</strong> Menyampaikan makna bisnis di balik angka kepada audiens yang tepat.</li>
+              <li><strong>Memberikan Rekomendasi:</strong> Saran aksi bisnis terukur berdasarkan temuan analitik.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: 3 Chart Utama yang Dibangun -->
+      <section data-topic="3 Chart Utama Dashboard">
+        <span class="slide-category-label">Rancangan Dashboard</span>
+        <h2>3 Chart Utama Dashboard Warmindo</h2>
+        <p>Studi kasus menggunakan data dummy warung makan indomi dengan 3 fokus visualisasi.</p>
+
+        <div class="grid-3" style="margin-top: 16px;">
+          <div class="c-card c-card-accent-top c-card-blue">
+            <span class="c-badge c-badge-blue" style="margin-bottom:8px;">Chart 1: Line Chart</span>
+            <h3>Trend Penjualan Bulanan</h3>
+            <p>Memetakan fluktuasi total omzet penjualan bersih dari bulan ke bulan.</p>
+            <ul style="font-size:0.75em; margin-bottom:0;">
+              <li>Dimensi: <code>Tanggal_Transaksi</code> (Year Month)</li>
+              <li>Metrik: <code>SUM(Nilai_Penjualan)</code></li>
+            </ul>
+          </div>
+
+          <div class="c-card c-card-accent-top c-card-teal">
+            <span class="c-badge c-badge-teal" style="margin-bottom:8px;">Chart 2: Bar Chart</span>
+            <h3>Top 5 Produk Favorit</h3>
+            <p>Meranking menu makanan/minuman dengan kuantitas porsi penjualan tertinggi.</p>
+            <ul style="font-size:0.75em; margin-bottom:0;">
+              <li>Dimensi: <code>Nama_Produk</code></li>
+              <li>Metrik: <code>SUM(Quantity)</code></li>
+            </ul>
+          </div>
+
+          <div class="c-card c-card-accent-top c-card-peach">
+            <span class="c-badge c-badge-peach" style="margin-bottom:8px;">Chart 3: Donut Chart</span>
+            <h3>Distribusi Jenis Pembelian</h3>
+            <p>Melihat proporsi transaksi pesanan Dine In (makan di tempat) vs Take Away.</p>
+            <ul style="font-size:0.75em; margin-bottom:0;">
+              <li>Dimensi: <code>Jenis_Pesanan</code></li>
+              <li>Metrik: <code>COUNT(Quantity / Transaksi)</code></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: Data Mentah Warmindo -->
+      <section data-topic="Inspeksi Data Mentah">
+        <span class="step-badge">Persiapan Data</span>
+        <h2>Inspeksi Dataset Transaksi Warmindo</h2>
+        <div class="step-grid">
+          <div>
+            <p>Dataset memuat riwayat transaksi penjualan Warmindo harian:</p>
+            <ul style="font-size:0.8em;">
+              <li><code>Tanggal_Transaksi</code>: Waktu pencatatan nota.</li>
+              <li><code>Nama_Produk</code>: Menu mi rebus/goreng, minuman, dsb.</li>
+              <li><code>Quantity</code>: Jumlah porsi yang dipesan.</li>
+              <li><code>Nilai_Penjualan</code>: Total nominal Rupiah.</li>
+              <li><code>Jenis_Pesanan</code>: Dine In, Bungkus / Take Away.</li>
+            </ul>
+            <div class="c-callout c-callout-info">
+              Periksa kelengkapan kolom dan format sebelum dimuat ke dalam spreadsheet.
+            </div>
+          </div>
+          <div>
+            <img src="img/warmindo/image7.png" alt="Dataset Mentah Warmindo" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: Step 1 - Import ke Google Sheets -->
+      <section data-topic="Step 1: Import Google Sheets">
+        <span class="step-badge">Langkah 01</span>
+        <h2>Import Data ke dalam Google Sheet</h2>
+        <div class="step-grid">
+          <div>
+            <ol style="font-size:0.85em;">
+              <li>Buka laman <a href="https://docs.google.com/spreadsheets/" target="_blank">docs.google.com/spreadsheets</a> pada browser.</li>
+              <li>Buat berkas spreadsheet baru.</li>
+              <li>Pilih menu <strong>File &rarr; Impor</strong> &rarr; unggah file data transaksi Warmindo.</li>
+              <li>Pastikan tipe data kolom tanggal dan numerik terbaca dengan benar tanpa format error.</li>
+            </ol>
+            <div class="c-callout c-callout-success">
+              Google Sheet berfungsi sebagai data source cloud yang siap dihubungkan langsung ke Looker Studio.
+            </div>
+          </div>
+          <div>
+            <img src="img/warmindo/image8.png" alt="Membuka Google Sheets" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: Step 2 - Buka Google Looker Studio -->
+      <section data-topic="Step 2: Buka Looker Studio">
+        <span class="step-badge">Langkah 02</span>
+        <h2>Mengakses Google Looker Studio</h2>
+        <div class="step-grid">
+          <div>
+            <p>Buka portal Looker Studio melalui alamat resmi:</p>
+            <div class="c-card c-card-accent-top c-card-blue" style="margin-bottom:12px;">
+              <code style="font-size:1.1em; color:var(--ctp-blue);">https://lookerstudio.google.com/</code>
+            </div>
+            <ul>
+              <li>Masuk menggunakan akun Google yang sama dengan akun Google Sheet.</li>
+              <li>Di halaman beranda, Anda dapat melihat galeri laporan dan opsi membuat laporan baru.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image9.png" alt="Laman Awal Looker Studio" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: Step 3 - Buat Blank Report -->
+      <section data-topic="Step 3: Blank Report">
+        <span class="step-badge">Langkah 03</span>
+        <h2>Membuat Laporan Kosong (Blank Report)</h2>
+        <div class="step-grid">
+          <div>
+            <p>Untuk memulai proyek dashboard dari awal:</p>
+            <ol style="font-size:0.85em;">
+              <li>Klik kartu <strong>Blank Report</strong> (Laporan Kosong) dengan ikon tanda tambah (+).</li>
+              <li>Looker Studio akan membuka kanvas editor baru dan secara otomatis menampilkan jendela <em>"Add data to report"</em>.</li>
+            </ol>
+            <div class="c-callout c-callout-info">
+              Setiap laporan baru Looker Studio membutuhkan minimal satu data source yang terhubung.
+            </div>
+          </div>
+          <div>
+            <img src="img/warmindo/image10.png" alt="Memilih Blank Report" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: Step 4 - Memilih Konektor Google Sheets -->
+      <section data-topic="Step 4: Konektor Google Sheets">
+        <span class="step-badge">Langkah 04</span>
+        <h2>Menghubungkan Data Source Google Sheets</h2>
+        <div class="step-grid">
+          <div>
+            <p>Pada jendela pemilihan konektor data:</p>
+            <ol style="font-size:0.85em;">
+              <li>Pilih konektor <strong>Google Sheets</strong> di baris Google Connectors.</li>
+              <li>Beri izin akses jika baru pertama kali menggunakan Looker Studio.</li>
+              <li>Sistem akan menampilkan daftar spreadsheet yang ada pada Google Drive Anda.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/warmindo/image11.png" alt="Memilih Google Sheets Connector" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: Step 5 - Memilih Spreadsheet & Worksheet -->
+      <section data-topic="Step 5: Pilih Worksheet">
+        <span class="step-badge">Langkah 05</span>
+        <h2>Memilih Spreadsheet &amp; Menambahkan ke Laporan</h2>
+        <div class="step-grid">
+          <div>
+            <ol style="font-size:0.85em;">
+              <li>Pilih berkas spreadsheet <code>Data Penjualan Warmindo</code>.</li>
+              <li>Pilih lembar kerja (Worksheet) yang memuat tabel transaksi.</li>
+              <li>Pastikan opsi <em>"Use first row as headers"</em> tetap tercentang.</li>
+              <li>Klik tombol <strong>Add</strong> di pojok kanan bawah jendela, lalu konfirmasi <em>"Add to Report"</em>.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/warmindo/image12.png" alt="Memilih Spreadsheet dan Worksheet" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: Step 6 - Tampilan Kanvas Awal -->
+      <section data-topic="Step 6: Kanvas Awal Looker">
+        <span class="step-badge">Langkah 06</span>
+        <h2>Tampilan Kanvas Kerja Awal</h2>
+        <div class="step-grid">
+          <div>
+            <p>Setelah data terhubung:</p>
+            <ul>
+              <li>Looker Studio secara otomatis menaruh satu tabel sampel di tengah kanvas.</li>
+              <li>Di bilah kanan terlihat panel <strong>Data</strong> yang memuat semua kolom dari Google Sheets.</li>
+              <li>Hapus tabel default ini untuk menyiapkan kanvas kustom kita sendiri.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image13.png" alt="Kanvas Awal Looker Studio" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: Step 7 - Mengatur Theme & Layout Kanvas -->
+      <section data-topic="Step 7: Theme &amp; Layout">
+        <span class="step-badge">Langkah 07</span>
+        <h2>Mengatur Theme &amp; Background Kanvas</h2>
+        <div class="step-grid">
+          <div>
+            <p>Buka panel <strong>Theme and Layout</strong> di bilah kanan:</p>
+            <ul>
+              <li><strong>Theme:</strong> Sesuaikan warna latar kanvas agar ramah di mata (Catppuccin Base / soft light).</li>
+              <li><strong>Layout:</strong> Pastikan ukuran kanvas adalah 16:9 Landscape (1280 x 720 px).</li>
+              <li>Tambahkan judul header dashboard: <em>"DASHBOARD ANALISIS PENJUALAN WARMINDO"</em>.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image14.png" alt="Pengaturan Theme and Layout" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 12: Step 8 - Memilih Time Series / Line Chart -->
+      <section data-topic="Step 8: Add Time Series Chart">
+        <span class="step-badge">Langkah 08</span>
+        <h2>Menambahkan Chart 1: Time Series Chart</h2>
+        <div class="step-grid">
+          <div>
+            <ol style="font-size:0.85em;">
+              <li>Klik menu atas <strong>Add a chart</strong>.</li>
+              <li>Di kelompok <em>Time series</em>, pilih opsi <strong>Time series chart / Line chart</strong>.</li>
+              <li>Grafik garis ini dirancang khusus untuk memvisualisasikan data runtun waktu (tren penjualan).</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/warmindo/image15.png" alt="Memilih Time Series Chart" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 13: Step 9 - Menempatkan Chart di Kanvas -->
+      <section data-topic="Step 9: Menempatkan Line Chart">
+        <span class="step-badge">Langkah 09</span>
+        <h2>Menempatkan Grafik Garis di Kanvas</h2>
+        <div class="step-grid">
+          <div>
+            <p>Letakkan grafik di area atas kanvas:</p>
+            <ul>
+              <li>Atur ukuran grafik garis membentang di bagian kiri kanvas dashboard.</li>
+              <li>Grafik akan segera memuat data awal secara otomatis dari field tanggal.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image16.png" alt="Menempatkan Line Chart di Kanvas" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 14: Step 10 - Konfigurasi Dimensi & Metrik Chart 1 -->
+      <section data-topic="Step 10: Setup Dimensi &amp; Metrik">
+        <span class="step-badge">Langkah 10</span>
+        <h2>Setup Dimensi &amp; Metrik Grafik Garis</h2>
+        <div class="step-grid">
+          <div>
+            <p>Pada panel <strong>Setup</strong> sebelah kanan:</p>
+            <ul>
+              <li><strong>Dimension:</strong> Masukkan <code>Tanggal_Transaksi</code>.</li>
+              <li><strong>Metric:</strong> Ganti menjadi <code>Nilai_Penjualan</code> dengan agregasi <code>SUM</code>.</li>
+              <li>Grafik kini menampilkan total uang hasil penjualan harian.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image17.png" alt="Setup Data Dimensi dan Metrik" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 15: Step 11 - Mengatur Granularitas Bulanan -->
+      <section data-topic="Step 11: Granularitas Waktu Bulanan">
+        <span class="step-badge">Langkah 11</span>
+        <h2>Mengatur Granularitas Tanggal ke Bulanan</h2>
+        <div class="step-grid">
+          <div>
+            <p>Untuk merangkum tren bulanan yang halus:</p>
+            <ol style="font-size:0.85em;">
+              <li>Arahkan kursor ke dimensi <code>Tanggal_Transaksi</code> lalu klik ikon kalender / pensil.</li>
+              <li>Pada menu <em>Granularity</em>, ubah dari Harian (Date) menjadi <strong>Year Month (Tahun Bulan)</strong>.</li>
+              <li>Grafik otomatis mengagregasi ribuan baris transaksi menjadi titik per bulan.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/warmindo/image18.png" alt="Mengatur Granularity Tanggal" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 16: Step 12 - Menyesuaikan Style Garis -->
+      <section data-topic="Step 12: Kustomisasi Style Garis">
+        <span class="step-badge">Langkah 12</span>
+        <h2>Menyesuaikan Style Grafik Garis</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Jangan Lupa style nya di coba ubah …"</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li>Pindah ke tab <strong>Style</strong> pada panel kanan.</li>
+              <li>Ubah warna garis menjadi biru aksen (<code>#1e66f5</code>).</li>
+              <li>Atur ketebalan garis (Line weight) dan aktifkan titik data point bulat.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image19.png" alt="Kustomisasi Style Grafik" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 17: Step 13 - Menghilangkan Legend Chart 1 -->
+      <section data-topic="Step 13: Menghilangkan Legend">
+        <span class="step-badge">Langkah 13</span>
+        <h2>Menghilangkan Legend pada Grafik Garis</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Ngilangin legend."</em>
+            </div>
+            <p style="font-size:0.85em; margin-top:10px;">
+              Karena grafik ini hanya menampilkan satu deret metrik penjualan, label legend redundan.
+            </p>
+            <ul>
+              <li>Cari bagian <strong>Legend</strong> di tab Style.</li>
+              <li>Pilih opsi posisi <strong>None</strong> untuk mematikan legend.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image20.png" alt="Menghilangkan Legend" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 18: Step 14 - Menampilkan Data Labels -->
+      <section data-topic="Step 14: Show Data Labels">
+        <span class="step-badge">Langkah 14</span>
+        <h2>Menampilkan Data Labels pada Grafik</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Show Data Labels"</em>
+            </div>
+            <p style="font-size:0.85em; margin-top:10px;">
+              Memudahkan pembaca melihat nilai omzet secara instan tanpa harus mengarahkan kursor:
+            </p>
+            <ul>
+              <li>Centang opsi <strong>"Show data labels"</strong> di tab Style.</li>
+              <li>Nominal omzet penjualan langsung muncul di atas setiap titik bulan.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image21.png" alt="Show Data Labels" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 19: Step 15 - Menghilangkan Warna Gridlines -->
+      <section data-topic="Step 15: Grid Color Transparan">
+        <span class="step-badge">Langkah 15</span>
+        <h2>Menghilangkan Warna Grid (Transparent Grid)</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Menghilangkan Warna Grid"</em>
+            </div>
+            <p style="font-size:0.85em; margin-top:10px;">
+              Garis kisi-kisi abu-abu sering membuat tampilan terkesan penuh:
+            </p>
+            <ul>
+              <li>Pada bagian <em>Grid</em> di tab Style, ubah <strong>Grid color</strong> menjadi <strong>Transparent</strong>.</li>
+              <li>Tampilan grafik menjadi bersih, modern, dan minimalis.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image22.png" alt="Menghilangkan Warna Grid" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 20: Step 16 - Konfigurasi Border Chart 1 -->
+      <section data-topic="Step 16: Setup Border Chart 1">
+        <span class="step-badge">Langkah 16</span>
+        <h2>Konfigurasi Border &amp; Sudut Melengkung</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Konfigurasi Border"</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li>Gulir ke bawah pada tab Style ke bagian <strong>Background and border</strong>.</li>
+              <li>Pilih warna background kartu putih bersih.</li>
+              <li>Atur <strong>Border radius</strong> menjadi 10px atau 12px untuk estetika modern.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image23.png" alt="Konfigurasi Border Grafik Garis" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 21: Step 17 - Hasil Chart 1 di Kanvas -->
+      <section data-topic="Step 17: Hasil Chart 1 Selesai">
+        <span class="step-badge">Review Chart 1</span>
+        <h2>Hasil Chart 1: Trend Penjualan Bulanan Selesai</h2>
+        <div class="step-grid">
+          <div>
+            <div class="c-callout c-callout-success">
+              <strong>Chart 1 Telah Selesai:</strong> Grafik tren bulanan tampil rapi dengan label angka jelas, tanpa grid mengganggu, dan berbingkai rounded.
+            </div>
+            <p style="font-size:0.85em;">
+              Sekarang kita siap melanjutkan ke komponen kedua: <strong>Bar Chart untuk 5 Produk Terfavorit</strong>.
+            </p>
+          </div>
+          <div>
+            <img src="img/warmindo/image24.png" alt="Chart 1 Selesai di Kanvas" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 22: Step 18 - Memilih Bar Chart -->
+      <section data-topic="Step 18: Add Bar Chart">
+        <span class="step-badge">Langkah 18</span>
+        <h2>Menambahkan Chart 2: Bar Chart</h2>
+        <div class="step-grid">
+          <div>
+            <ol style="font-size:0.85em;">
+              <li>Klik kembali menu atas <strong>Add a chart</strong>.</li>
+              <li>Di kelompok <em>Bar</em>, pilih diagram batang (Bar chart).</li>
+              <li>Tempatkan diagram batang di bawah grafik garis.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/warmindo/image25.png" alt="Memilih Bar Chart" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 23: Step 19 - Setup Data Nama Produk & Quantity -->
+      <section data-topic="Step 19: Setup Bar Chart Data">
+        <span class="step-badge">Langkah 19</span>
+        <h2>Setup Data: Nama Produk &amp; Quantity</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Setup Data ( Nama_Produk dan Quantity) sama adjust ukuran grafiknya ."</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li><strong>Dimension:</strong> Ganti menjadi <code>Nama_Produk</code>.</li>
+              <li><strong>Metric:</strong> Ganti menjadi <code>Quantity</code> (Agregasi: <code>SUM</code>).</li>
+              <li>Sesuaikan panjang dan lebar grafik agar nama menu tidak terpotong.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image26.png" alt="Setup Data Bar Chart" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 24: Step 20 - Batasi 5 Produk & Data Labels -->
+      <section data-topic="Step 20: Top 5 Produk &amp; Labels">
+        <span class="step-badge">Langkah 20</span>
+        <h2>Filter Top 5 Produk &amp; Tampilkan Data Label</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Bars yang semula 10, diganti jadi 5 produk paling laris . Show data label nya di centang ."</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li>Di tab Style, ubah nilai <strong>Bars</strong> dari default 10 menjadi <strong>5</strong>.</li>
+              <li>Centang opsi <strong>"Show data labels"</strong> agar jumlah porsi terjual muncul di ujung batang.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image27.png" alt="Top 5 Bars dan Data Labels" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 25: Step 21 - Matikan Legend Bar Chart -->
+      <section data-topic="Step 21: Legend None pada Bar">
+        <span class="step-badge">Langkah 21</span>
+        <h2>Mematikan Legend pada Bar Chart</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Posisi Legend nya pilih yang None."</em>
+            </div>
+            <p style="font-size:0.85em; margin-top:10px;">
+              Sumbu Y sudah memuat nama menu produk secara lengkap, sehingga legend warna tidak lagi dibutuhkan.
+            </p>
+            <ul>
+              <li>Pilih opsi posisi <strong>Legend: None</strong>.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image28.png" alt="Legend None pada Bar Chart" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 26: Step 22 - Grid Transparan Bar Chart -->
+      <section data-topic="Step 22: Grid Transparan Bar">
+        <span class="step-badge">Langkah 22</span>
+        <h2>Setting Warna Grid Menjadi Transparan</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Setting warna grid nya jadi transparan"</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li>Sama seperti Chart 1, buka bagian <em>Grid</em> di tab Style.</li>
+              <li>Ubah <strong>Grid color</strong> menjadi <strong>Transparent</strong> agar konsisten.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image29.png" alt="Grid Transparan pada Bar Chart" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 27: Step 23 - Setup Border Bar Chart -->
+      <section data-topic="Step 23: Setup Border Bar">
+        <span class="step-badge">Langkah 23</span>
+        <h2>Setup Border &amp; Hasil Chart 2 Selesai</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Setup Border nya"</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li>Beri warna background putih dan radius border yang serasi (10-12px).</li>
+              <li>Chart 2: Top 5 Menu Paling Laris kini selesai dan tertata berdampingan.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image30.png" alt="Setup Border Bar Chart" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 28: Step 24 - Memilih Pie / Donut Chart -->
+      <section data-topic="Step 24: Add Donut Chart">
+        <span class="step-badge">Langkah 24</span>
+        <h2>Menambahkan Chart 3: Donut / Pie Chart</h2>
+        <div class="step-grid">
+          <div>
+            <ol style="font-size:0.85em;">
+              <li>Klik menu <strong>Add a chart</strong>.</li>
+              <li>Pilih kelompok <strong>Pie chart / Donut chart</strong>.</li>
+              <li>Tempatkan di sisi kanan kanvas dashboard untuk melengkapi komposisi layout 3 grafik.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/warmindo/image31.png" alt="Memilih Pie Donut Chart" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 29: Step 25 - Dimensi Jenis Pesanan -->
+      <section data-topic="Step 25: Setup Dimensi Jenis Pesanan">
+        <span class="step-badge">Langkah 25</span>
+        <h2>Setup Dimensi: Jenis Pesanan</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Perhatikan setup nya , tanggal transaksi diganti menjadi Jenis_Pesanan , nilai_penjualan diganti dengan quantity,"</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li><strong>Dimension:</strong> Ganti menjadi <code>Jenis_Pesanan</code> (Dine In vs Take Away).</li>
+              <li><strong>Metric awal:</strong> Masukkan <code>Quantity</code>.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image32.png" alt="Setup Dimensi Jenis Pesanan" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 30: Step 26 - Poin Kritis Agregasi COUNT -->
+      <section data-topic="Step 26: Agregasi COUNT">
+        <span class="step-badge">Langkah 26 (Poin Kritis)</span>
+        <h2>Ubah Agregasi SUM Menjadi COUNT</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box" style="border-left: 4px solid var(--ctp-red);">
+              <span class="material-symbols-outlined" style="color:var(--ctp-red);">error</span>
+              <em>Catatan Modul: "Di quantity, sum nya diubah jadi count. Karena akan menghitung frekuensi transaksi , bukan jumlah nya ."</em>
+            </div>
+            <p style="font-size:0.85em; margin-top:10px;">
+              <strong>Insight:</strong> Kita ingin mengetahui <em>berapa kali transaksi pemesanan</em> terjadi di tempat vs dibungkus, bukan total butir telur/mi.
+            </p>
+          </div>
+          <div>
+            <img src="img/warmindo/image33.png" alt="Mengubah SUM ke COUNT" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 31: Step 27 - Pindahkan Legend ke Bawah -->
+      <section data-topic="Step 27: Legend Donut di Bawah">
+        <span class="step-badge">Langkah 27</span>
+        <h2>Pindahkan Posisi Legend ke Bawah</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Pindahkan legend nya ke bawah ."</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li>Buka tab Style pada chart Donut.</li>
+              <li>Pada opsi posisi <strong>Legend</strong>, pilih ikon <strong>Bottom (Bawah)</strong>.</li>
+              <li>Keterangan <em>Dine In</em> dan <em>Take Away</em> kini tersusun rapi di dasar grafik.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image34.png" alt="Pindahkan Legend ke Bawah" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 32: Step 28 - Setup Border Donut Chart -->
+      <section data-topic="Step 28: Setup Border Donut">
+        <span class="step-badge">Langkah 28</span>
+        <h2>Setup Border &amp; Sudut Melengkung Donut</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Setup border nya"</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li>Atur background kartu putih dan border radius 12px.</li>
+              <li>Ketiga chart kini telah lengkap dengan styling yang seragam dan elegan.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image35.png" alt="Setup Border Donut Chart" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 33: Step 29 - Menambahkan Kontrol Filter -->
+      <section data-topic="Step 29: Menambahkan Kontrol">
+        <span class="step-badge">Langkah 29</span>
+        <h2>Menambahkan Kontrol Filter Interaktif</h2>
+        <div class="step-grid">
+          <div>
+            <p>Agar pengguna bisa menyaring data secara dinamis:</p>
+            <ol style="font-size:0.85em;">
+              <li>Klik menu atas <strong>Add a control</strong>.</li>
+              <li>Pilih <strong>Date range control</strong> atau <strong>Drop-down list</strong>.</li>
+              <li>Komponen filter ini memungkinkan pemilik Warmindo memfilter data berdasarkan tanggal transaksi.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/warmindo/image36.png" alt="Menambahkan Kontrol Filter" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 34: Step 30 - Menata Posisi Kontrol di Header -->
+      <section data-topic="Step 30: Penempatan Kontrol">
+        <span class="step-badge">Langkah 30</span>
+        <h2>Menata Posisi Kontrol pada Kanvas</h2>
+        <div class="step-grid">
+          <div>
+            <p>Atur penempatan kontrol filter:</p>
+            <ul>
+              <li>Posisikan kontrol filter di area pojok kanan atas sejajar dengan Header dashboard.</li>
+              <li>Uji coba pergantian tanggal untuk memastikan seluruh chart merespons filter secara serempak.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image37.png" alt="Menata Posisi Kontrol Filter" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 35: Step 31 - Tata Letak Proporsional 3 Chart -->
+      <section data-topic="Step 31: Penataan Layout 3 Chart">
+        <span class="step-badge">Langkah 31</span>
+        <h2>Harmonisasi Tata Letak 3 Komponen Chart</h2>
+        <div class="step-grid">
+          <div>
+            <p>Tahap finishing tata letak:</p>
+            <ul>
+              <li>Sejajarkan garis horizontal dan vertikal antar kartu menggunakan <em>Smart Guides</em>.</li>
+              <li>Pastikan jarak spasi (padding/margin) antar chart seimbang dan rapi.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/warmindo/image38.png" alt="Tata Letak Final Tiga Chart" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 36: Tampilan Utuh Hasil Akhir Dashboard -->
+      <section data-topic="Hasil Akhir Dashboard Warmindo">
+        <span class="step-badge" style="background:rgba(64,160,43,0.15); color:var(--ctp-green);">Final Masterpiece</span>
+        <h2>Tampilan Penuh Dashboard Warmindo</h2>
+        <p style="font-size:0.85em; color:var(--ctp-subtext0); margin-bottom:8px;">
+          Dashboard siap pakai yang menyajikan Tren Penjualan Bulanan, Top 5 Menu Paling Laris, dan Distribusi Pemesanan.
+        </p>
+        <img src="img/warmindo/image39.png" alt="Dashboard Warmindo Final" class="step-screenshot-full">
+      </section>
+
+      <!-- SLIDE 37: Narasi Laporan & Rekomendasi Bisnis -->
+      <section data-topic="Narasi &amp; Rekomendasi Bisnis">
+        <span class="slide-category-label">SKKNI M.70BDA00.013.1</span>
+        <h2>Penyusunan Narasi &amp; Rekomendasi Bisnis</h2>
+        <p>Menerjemahkan grafik visual dashboard menjadi keputusan manajerial yang berdampak.</p>
+
+        <div class="grid-2">
+          <div class="c-card c-card-accent-top c-card-blue">
+            <h3><span class="material-symbols-outlined" style="color:var(--ctp-blue);">insight</span> Temuan Analisis (Key Insights)</h3>
+            <ul style="font-size:0.8em;">
+              <li><strong>Tren Omzet:</strong> Puncak penjualan terjadi di bulan-bulan liburan semester dengan kenaikan stabil.</li>
+              <li><strong>Pareto Menu:</strong> Varian <em>Indomie Goreng Jumbo</em> dan <em>Es Teh</em> mendominasi 50%+ total porsi pesanan harian.</li>
+              <li><strong>Pola Konsumsi:</strong> Sebagian besar pelanggan memilih makan di tempat (Dine In) pada jam malam.</li>
+            </ul>
+          </div>
+
+          <div class="c-card c-card-accent-top c-card-green">
+            <h3><span class="material-symbols-outlined" style="color:var(--ctp-green);">recommend</span> Rekomendasi Aksi Nyata</h3>
+            <ul style="font-size:0.8em;">
+              <li><strong>Stok &amp; Rantai Pasok:</strong> Tambah stok varian terlaris 30% jelang malam minggu agar tidak <em>out-of-stock</em>.</li>
+              <li><strong>Strategi Bundling:</strong> Rilis paket hemat "Goreng Jumbo + Es Teh" untuk menaikkan nilai rata-rata transaksi.</li>
+              <li><strong>Ruang Pelayanan:</strong> Prioritaskan kenyamanan tempat duduk Dine In pada area indoor.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 38: Rangkuman & Next Step -->
+      <section data-topic="Rangkuman &amp; Uji Kompetensi">
+        <span class="slide-category-label">Uji Kompetensi</span>
+        <h2>Rangkuman Praktik &amp; Tahap Berikutnya</h2>
+        <div class="grid-2" style="margin-top:14px;">
+          <div class="c-card">
+            <h3 style="color:var(--ctp-peach);"><span class="material-symbols-outlined">checklist</span> Checklist Kelulusan</h3>
+            <ul style="font-size:0.85em;">
+              <li>Mampu mengimpor dan memetakan data Google Sheets ke Looker Studio.</li>
+              <li>Mampu mengonfigurasi Time Series chart dengan granularitas bulanan.</li>
+              <li>Mampu membatasi Top 5 bars dan menghapus legend redundan.</li>
+              <li>Mampu mengatur agregasi COUNT pada Donut chart jenis pesanan.</li>
+              <li>Mampu menata tata letak dashboard yang estetis dan beretika data.</li>
+            </ul>
+          </div>
+
+          <div class="c-card" style="text-align:center; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+            <div style="font-size: 50px; margin-bottom: 8px;">🎓 💼</div>
+            <h3>NEXT: Uji Kompetensi &amp; Dashboard Sales</h3>
+            <p style="font-size:0.8em; max-width: 360px; margin-bottom:14px;">
+              Lanjutkan ke Modul 4 untuk mempelajari pembuatan Dashboard Sales Enterprise multidimensi.
+            </p>
+            <a href="04-dashboard-sales.html" class="c-badge c-badge-peach" style="font-size: 0.9em; padding: 8px 16px; text-decoration:none;">
+              Buka Modul 4: Dashboard Sales &rarr;
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 39: Q&A Slide -->
+      <section data-topic="Sesi Tanya Jawab">
+        <div style="text-align: center; padding-top: 40px;">
+          <span class="material-symbols-outlined" style="font-size: 72px; color: var(--ctp-peach); margin-bottom: 12px;">help_center</span>
+          <h2>Sesi Diskusi &amp; Tanya Jawab</h2>
+          <p style="font-size: 1.1em; color: var(--ctp-subtext0); max-width: 600px; margin: 0 auto 24px auto;">
+            Silakan ajukan pertanyaan seputar langkah pembuatan chart, pengaturan granularitas waktu, maupun kustomisasi style Looker Studio.
+          </p>
+          <div style="font-family: var(--font-mono); font-size: 0.9em; color: var(--ctp-subtext1);">
+            Hartanto Tantriawan, S.Kom., M.Kom. &bull; hartanto.tantriawan@if.itera.ac.id
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Persistent Edge-to-Edge Deck Footer -->
+  <footer class="deck-footer">
+    <div class="deck-footer-left">
+      <span class="deck-footer-code">DA-2026</span>
+      <span class="deck-footer-sep">&#x2022;</span>
+      <span class="deck-footer-dept">Modul 03: Dashboard Warmindo</span>
+    </div>
+
+    <div class="deck-footer-center">
+      <button type="button" id="deck-footer-topic" class="deck-footer-topic" onclick="toggleTopicPopover(event)" title="Daftar Isi &amp; Navigasi Cepat Slide (Klik)">
+        <span id="deck-footer-topic-text" class="deck-footer-topic-text">Modul 03 &bull; Dashboard Warmindo (Step by Step)</span>
+        <span class="material-symbols-outlined deck-footer-topic-icon">expand_less</span>
+      </button>
+    </div>
+
+    <div class="deck-footer-right">
+      <button type="button" class="deck-footer-btn" onclick="Reveal.prev()" title="Slide Sebelumnya (&#x2190; / P)" aria-label="Slide Sebelumnya">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+      <button type="button" class="deck-counter-btn" onclick="Reveal.toggleOverview()" title="Klik untuk Matriks Seluruh Slide (Esc/O)">
+        <span id="deck-slide-current">01</span><span class="deck-counter-sep">/</span><span id="deck-slide-total">39</span>
+      </button>
+      <button type="button" class="deck-footer-btn" onclick="Reveal.next()" title="Slide Berikutnya (&#x2192; / Space / N)" aria-label="Slide Berikutnya">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Floating Slide Topic Navigation Popover (Bottom-Up) -->
+  <div class="deck-topic-popover" id="deck-topic-popover">
+    <div class="deck-popover-search-wrap">
+      <input type="text" id="deck-topic-search" class="deck-popover-search" placeholder="Cari langkah atau slide..." oninput="filterTopicList(this.value)">
+    </div>
+    <div class="deck-topic-list" id="deck-topic-list">
+      <!-- Generated dynamically by buildTopicIndex() -->
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="shortcuts-modal" id="shortcuts-modal" onclick="closeShortcutsModal(event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Pintasan Keyboard Presentasi</h3>
+        <button class="modal-close" onclick="closeShortcutsModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcut-row"><span>Slide Berikutnya</span><div><kbd class="kbd-key">Space</kbd> / <kbd class="kbd-key">&rarr;</kbd></div></div>
+        <div class="shortcut-row"><span>Slide Sebelumnya</span><div><kbd class="kbd-key">&larr;</kbd> / <kbd class="kbd-key">P</kbd></div></div>
+        <div class="shortcut-row"><span>Tinjauan Matriks (Overview)</span><div><kbd class="kbd-key">Esc</kbd> / <kbd class="kbd-key">O</kbd></div></div>
+        <div class="shortcut-row"><span>Layar Penuh (Fullscreen)</span><div><kbd class="kbd-key">F</kbd></div></div>
+        <div class="shortcut-row"><span>Catatan Pembicara (Speaker Notes)</span><div><kbd class="kbd-key">S</kbd></div></div>
+        <div class="shortcut-row"><span>Buka/Tutup Panduan Pintasan</span><div><kbd class="kbd-key">?</kbd></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reveal.js Scripts and Plugins from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+
+  <script>
+    let currentAspectMode = localStorage.getItem('reveal_aspect_mode') || 'auto';
+
+    function calculateResponsiveDimensions(mode) {
+      const winW = window.innerWidth;
+      const winH = window.innerHeight - 86.5;
+      const ratio = winW / winH;
+
+      if (mode === '16-9') {
+        return { width: 1280, height: 720, label: '16:9' };
+      } else if (mode === '16-10') {
+        return { width: 1280, height: 800, label: '16:10' };
+      } else if (mode === '4-3') {
+        return { width: 1024, height: 768, label: '4:3' };
+      } else if (mode === 'mobile') {
+        return { width: 750, height: 1000, label: 'Mobile' };
+      } else if (mode === 'text-large') {
+        return { width: 960, height: 540, label: 'Teks Besar' };
+      } else {
+        if (winW <= 768 || ratio < 1.15) {
+          return { width: 750, height: Math.max(900, Math.round(750 / Math.max(0.5, ratio))), label: 'Auto' };
+        } else if (ratio >= 1.65) {
+          return { width: 1280, height: 720, label: 'Auto' };
+        } else if (ratio >= 1.45) {
+          return { width: 1280, height: 800, label: 'Auto' };
+        } else {
+          return { width: 1024, height: 768, label: 'Auto' };
+        }
+      }
+    }
+
+    const initialDim = calculateResponsiveDimensions(currentAspectMode);
+
+    Reveal.initialize({
+      width: initialDim.width,
+      height: initialDim.height,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      hash: true,
+      slideNumber: false,
+      controls: false,
+      progress: false,
+      center: true,
+      touch: true,
+      transition: 'slide',
+      backgroundTransition: 'none',
+      plugins: [ RevealNotes, RevealHighlight, RevealMath.KaTeX ]
+    });
+
+    function updateDeckState(event) {
+      const indices = event ? { h: event.indexh, v: event.indexv } : Reveal.getIndices();
+      const totalSlides = Reveal.getTotalSlides();
+      const currentIdx = indices ? indices.h : 0;
+
+      const progressBar = document.getElementById('deck-progress-bar');
+      if (progressBar) {
+        const progressPercent = totalSlides > 1 ? (currentIdx / (totalSlides - 1)) * 100 : 0;
+        progressBar.style.width = progressPercent + '%';
+      }
+
+      const currentEl = document.getElementById('deck-slide-current');
+      const totalEl = document.getElementById('deck-slide-total');
+      if (currentEl) currentEl.textContent = String(currentIdx + 1).padStart(2, '0');
+      if (totalEl) totalEl.textContent = String(totalSlides).padStart(2, '0');
+
+      const topicEl = document.getElementById('deck-footer-topic-text');
+      if (topicEl) {
+        if (currentIdx === 0) {
+          topicEl.textContent = 'Modul 03 • Dashboard Warmindo (Step by Step)';
+        } else {
+          const currentSlide = Reveal.getCurrentSlide();
+          if (currentSlide) {
+            const topicAttr = currentSlide.getAttribute('data-topic');
+            if (topicAttr) {
+              topicEl.textContent = topicAttr;
+            } else {
+              const heading = currentSlide.querySelector('h2') || currentSlide.querySelector('h1');
+              topicEl.textContent = heading ? heading.textContent.trim() : 'Modul 03 • Dashboard Warmindo';
+            }
+          }
+        }
+      }
+
+      updateActiveTopicItem(currentIdx);
+    }
+
+    Reveal.on('ready', event => {
+      document.body.classList.add('reveal-ready');
+      updateDeckState(event);
+      buildTopicIndex();
+    });
+    Reveal.on('slidechanged', updateDeckState);
+
+    function buildTopicIndex() {
+      const listEl = document.getElementById('deck-topic-list');
+      if (!listEl) return;
+
+      const slides = document.querySelectorAll('.reveal .slides > section');
+      let htmlStr = '';
+
+      slides.forEach((slide, idx) => {
+        const topicAttr = slide.getAttribute('data-topic');
+        const h1 = slide.querySelector('h1');
+        const h2 = slide.querySelector('h2');
+        let title = topicAttr || (h2 ? h2.textContent.trim() : (h1 ? h1.textContent.trim() : `Slide ${idx + 1}`));
+        const numStr = String(idx + 1).padStart(2, '0');
+
+        htmlStr += `
+          <div class="deck-topic-item" data-slide-index="${idx}" onclick="jumpToSlide(${idx})">
+            <span class="deck-topic-num">${numStr}</span>
+            <span class="deck-topic-name" title="${title}">${title}</span>
+          </div>
+        `;
+      });
+
+      listEl.innerHTML = htmlStr;
+      const currentIdx = Reveal.getIndices ? Reveal.getIndices().h : 0;
+      updateActiveTopicItem(currentIdx);
+    }
+
+    function updateActiveTopicItem(currentIdx) {
+      document.querySelectorAll('.deck-topic-item').forEach(item => {
+        const idx = parseInt(item.getAttribute('data-slide-index'), 10);
+        item.classList.toggle('active', idx === currentIdx);
+      });
+    }
+
+    function toggleTopicPopover(e) {
+      if (e) e.stopPropagation();
+      const popover = document.getElementById('deck-topic-popover');
+      const btn = document.getElementById('deck-footer-topic');
+      if (!popover) return;
+
+      const isActive = popover.classList.toggle('active');
+      if (btn) btn.classList.toggle('active', isActive);
+
+      if (isActive) {
+        const activeItem = popover.querySelector('.deck-topic-item.active');
+        if (activeItem) {
+          activeItem.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
+        const searchInput = document.getElementById('deck-topic-search');
+        if (searchInput) {
+          searchInput.value = '';
+          filterTopicList('');
+          setTimeout(() => searchInput.focus(), 80);
+        }
+      }
+    }
+
+    function closeTopicPopover() {
+      const popover = document.getElementById('deck-topic-popover');
+      const btn = document.getElementById('deck-footer-topic');
+      if (popover) popover.classList.remove('active');
+      if (btn) btn.classList.remove('active');
+    }
+
+    function jumpToSlide(index) {
+      Reveal.slide(index);
+      closeTopicPopover();
+    }
+
+    function filterTopicList(query) {
+      const q = (query || '').toLowerCase().trim();
+      const items = document.querySelectorAll('.deck-topic-item');
+      items.forEach(item => {
+        const num = (item.querySelector('.deck-topic-num') || {}).textContent || '';
+        const name = (item.querySelector('.deck-topic-name') || {}).textContent || '';
+        const matches = !q || num.toLowerCase().includes(q) || name.toLowerCase().includes(q);
+        item.style.display = matches ? 'grid' : 'none';
+      });
+    }
+
+    function setAspectMode(mode) {
+      currentAspectMode = mode;
+      localStorage.setItem('reveal_aspect_mode', mode);
+
+      const dim = calculateResponsiveDimensions(mode);
+
+      Reveal.configure({
+        width: dim.width,
+        height: dim.height,
+        margin: 0.04,
+        minScale: 0.2,
+        maxScale: 2.0
+      });
+
+      document.body.classList.remove('aspect-16-9', 'aspect-16-10', 'aspect-4-3', 'aspect-mobile');
+      if (mode === 'auto') {
+        if (window.innerWidth <= 768) document.body.classList.add('aspect-mobile');
+      } else {
+        document.body.classList.add('aspect-' + mode);
+      }
+
+      const labelEl = document.getElementById('aspect-label');
+      if (labelEl) labelEl.textContent = dim.label;
+
+      document.querySelectorAll('.dropdown-item').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-aspect') === mode);
+      });
+
+      closeAspectDropdown();
+      setTimeout(() => Reveal.layout(), 50);
+    }
+
+    function toggleAspectDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('aspect-menu');
+      if (menu) menu.classList.toggle('active');
+    }
+
+    function closeAspectDropdown() {
+      const menu = document.getElementById('aspect-menu');
+      if (menu) menu.classList.remove('active');
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) closeAspectDropdown();
+      if (!e.target.closest('#deck-topic-popover') && !e.target.closest('#deck-footer-topic')) closeTopicPopover();
+    });
+
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        if (currentAspectMode === 'auto') {
+          const dim = calculateResponsiveDimensions('auto');
+          const cfg = Reveal.getConfig();
+          if (cfg.width !== dim.width || cfg.height !== dim.height) {
+            Reveal.configure({ width: dim.width, height: dim.height });
+            const labelEl = document.getElementById('aspect-label');
+            if (labelEl) labelEl.textContent = dim.label;
+            Reveal.layout();
+          }
+        }
+      }, 200);
+    });
+
+    function openShortcutsModal() {
+      document.getElementById('shortcuts-modal').classList.add('active');
+    }
+
+    function closeShortcutsModal(event) {
+      if (!event || event.target.id === 'shortcuts-modal' || event.target.classList.contains('modal-close')) {
+        document.getElementById('shortcuts-modal').classList.remove('active');
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const popover = document.getElementById('deck-topic-popover');
+        if (popover && popover.classList.contains('active')) {
+          e.preventDefault();
+          e.stopPropagation();
+          closeTopicPopover();
+          return;
+        }
+      }
+      if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+        const modal = document.getElementById('shortcuts-modal');
+        modal.classList.toggle('active');
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', function() {
+      setAspectMode(currentAspectMode);
+    });
+  </script>
+
+</body>
+</html>

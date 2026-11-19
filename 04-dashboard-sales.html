@@ -1,0 +1,1287 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Modul 4: Dashboard Sales Enterprise - Step by Step | Catppuccin Deck</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Catppuccin Latte Design System -->
+  <link rel="stylesheet" href="css/catppuccin-latte.css">
+
+  <style>
+    /* Custom Styling for Step-by-Step Screenshots */
+    .step-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 18px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .aspect-mobile .step-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .step-screenshot {
+      width: 100%;
+      max-height: 52vh;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 6px 22px rgba(76, 79, 105, 0.12);
+      border: 1.5px solid var(--ctp-surface1);
+      background: #ffffff;
+      display: block;
+      margin: 4px auto;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .step-screenshot:hover {
+      transform: scale(1.015);
+      border-color: var(--ctp-blue);
+    }
+
+    .step-screenshot-full {
+      width: 100%;
+      max-height: 54vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(76, 79, 105, 0.15);
+      border: 1.5px solid var(--ctp-surface1);
+      background: #ffffff;
+      display: block;
+      margin: 8px auto;
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.72em;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: rgba(30, 102, 245, 0.12);
+      color: var(--ctp-blue);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .step-card-box {
+      background: var(--ctp-mantle);
+      border: 1px solid var(--ctp-surface1);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Persistent Edge-to-Edge Deck Header -->
+  <header class="deck-header">
+    <div class="deck-header-left">
+      <a href="index.html" class="deck-brand-link" title="Kembali ke Portal Modul Data Analyst">
+        <img src="assets/img/logo_2.webp" alt="Logo ITERA" class="deck-logo">
+        <img src="assets/img/dikti-saintek-berdampak-color.svg" alt="Logo Dikti" class="deck-logo">
+      </a>
+    </div>
+
+    <div class="deck-header-right">
+      <!-- Aspect Ratio / Projector Switcher -->
+      <div class="nav-dropdown">
+        <button type="button" class="deck-ctrl-btn" id="aspect-btn" onclick="toggleAspectDropdown(event)" title="Sesuaikan Rasio Layar & Proyektor">
+          <span class="material-symbols-outlined">aspect_ratio</span>
+          <span id="aspect-label" class="deck-btn-label">Auto</span>
+          <span class="material-symbols-outlined" style="font-size: 14px;">arrow_drop_down</span>
+        </button>
+        <div class="nav-dropdown-menu" id="aspect-menu">
+          <button type="button" class="dropdown-item active" data-aspect="auto" onclick="setAspectMode('auto')">
+            <span class="item-title">Auto</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="16-9" onclick="setAspectMode('16-9')">
+            <span class="item-title">16:9</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="16-10" onclick="setAspectMode('16-10')">
+            <span class="item-title">16:10</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="4-3" onclick="setAspectMode('4-3')">
+            <span class="item-title">4:3</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="mobile" onclick="setAspectMode('mobile')">
+            <span class="item-title">Mobile</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="text-large" onclick="setAspectMode('text-large')">
+            <span class="item-title">Teks Besar</span>
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="deck-ctrl-btn" onclick="Reveal.toggleOverview()" title="Lihat Matriks Seluruh Slide (Esc/O)">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="deck-btn-label">Overview</span>
+      </button>
+      <button type="button" class="deck-ctrl-btn" onclick="openShortcutsModal()" title="Panduan Pintasan Keyboard (?)">
+        <span class="material-symbols-outlined">keyboard</span>
+        <span class="deck-btn-label">Pintasan</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hairline Visual Progress Bar -->
+  <div class="deck-progress-track">
+    <div class="deck-progress-bar" id="deck-progress-bar"></div>
+  </div>
+
+  <!-- Reveal.js Container -->
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: Title Slide -->
+      <section data-topic="Dashboard Sales Enterprise">
+        <div style="margin-bottom: 14px;">
+          <span class="c-badge c-badge-blue">
+            <span class="material-symbols-outlined">monitoring</span> Modul 04 &bull; Panduan Visual Step-by-Step
+          </span>
+        </div>
+        <h1>Dashboard Sales Enterprise</h1>
+        <p style="font-size: 1.05em; color: var(--ctp-subtext0); max-width: 860px; margin-bottom: 22px;">
+          Tutorial Praktik Komprehensif Membangun Dashboard Penjualan Multidimensi di Google Looker Studio dengan Dokumentasi Tangkapan Layar Lengkap.
+        </p>
+        <div class="grid-3" style="max-width: 880px;">
+          <div class="c-card c-card-accent-top c-card-blue">
+            <h4>Penyusun Modul</h4>
+            <p><strong>Hartanto Tantriawan, S.Kom., M.Kom.</strong></p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-mauve">
+            <h4>Fokus Studi</h4>
+            <p>Looker Studio Sales Analytics</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-teal">
+            <h4>Fitur Enterprise</h4>
+            <p>Scorecards, Multi-Table, Charts &amp; Filters</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: Target Dashboard Preview -->
+      <section data-topic="Target Dashboard Preview">
+        <span class="step-badge">Target Capaian</span>
+        <h2>Preview Dashboard Sales yang Akan Dibuat</h2>
+        <p style="font-size:0.85em; color:var(--ctp-subtext0); margin-bottom:8px;">
+          Hasil akhir dashboard penjualan mencakup KPI scorecards, multi-tabel analitis, stacked bar chart, dan kontrol filter dinamis.
+        </p>
+        <img src="img/sales/image3.png" alt="Target Dashboard Sales Looker Studio" class="step-screenshot-full">
+      </section>
+
+      <!-- SLIDE 3: 7 Tahapan Outline Alur Pembuatan -->
+      <section data-topic="7 Tahapan Alur Kerja">
+        <span class="slide-category-label">Arsitektur Produksi</span>
+        <h2>7 Tahapan Membangun Dashboard Sales</h2>
+        <p>Alur kerja terstruktur yang dirancang oleh instruktur HTA untuk menghasilkan dashboard berkelas industri.</p>
+
+        <div class="pipeline-flow" style="grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0;">
+          <div class="pipeline-step">
+            <span class="c-num-circle c-num-blue" style="margin-bottom:4px;">1</span>
+            <h4>Import Data</h4>
+            <p style="font-size: 0.72em;">Koneksi dataset Google Sheets ke Looker Studio.</p>
+          </div>
+          <div class="pipeline-step">
+            <span class="c-num-circle c-num-teal" style="margin-bottom:4px;">2</span>
+            <h4>Customize Background</h4>
+            <p style="font-size: 0.72em;">Warna background, ukuran kanvas, dan header report.</p>
+          </div>
+          <div class="pipeline-step">
+            <span class="c-num-circle c-num-green" style="margin-bottom:4px;">3</span>
+            <h4>Scorecards</h4>
+            <p style="font-size: 0.72em;">Metrik KPI ringkasan eksekutif (Sales, Profit, Qty).</p>
+          </div>
+          <div class="pipeline-step">
+            <span class="c-num-circle c-num-peach" style="margin-bottom:4px;">4</span>
+            <h4>Create Table</h4>
+            <p style="font-size: 0.72em;">Tabel analitis kategori produk &amp; efektivitas promosi.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-flow" style="grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 10px 0;">
+          <div class="pipeline-step">
+            <span class="c-num-circle c-num-mauve" style="margin-bottom:4px;">5</span>
+            <h4>Create Chart</h4>
+            <p style="font-size: 0.72em;">Visualisasi Stacked Bar tren produk &amp; wilayah.</p>
+          </div>
+          <div class="pipeline-step">
+            <span class="c-num-circle c-num-blue" style="margin-bottom:4px;">6</span>
+            <h4>Filter</h4>
+            <p style="font-size: 0.72em;">Dropdown filter interaktif wilayah (Region).</p>
+          </div>
+          <div class="pipeline-step">
+            <span class="c-num-circle c-num-teal" style="margin-bottom:4px;">7</span>
+            <h4>Sharing &amp; Embed</h4>
+            <p style="font-size: 0.72em;">Embed kode iframe ke web portal &amp; presentasi.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAHAP 1: IMPORT DATA
+           ========================================================= -->
+
+      <!-- SLIDE 4: Tahap 1 - Akses Laman Awal Looker Studio -->
+      <section data-topic="Tahap 1: Laman Awal Looker">
+        <span class="step-badge">Tahap 1 &bull; Langkah 01</span>
+        <h2>Mengakses Portal Google Looker Studio</h2>
+        <div class="step-grid">
+          <div>
+            <p>Buka peramban (browser) dan akses alamat resmi:</p>
+            <div class="c-card c-card-accent-top c-card-blue" style="margin-bottom:12px;">
+              <code style="font-size:0.95em; color:var(--ctp-blue);">https://lookerstudio.google.com/navigation/reporting</code>
+            </div>
+            <ul>
+              <li>Pastikan akun Google Anda aktif dan terautentikasi.</li>
+              <li>Tampilan beranda menampilkan repositori laporan dan menu pembuatan laporan baru.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image4.png" alt="Laman Awal Looker Studio Reporting" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: Tahap 1 - Memilih Blank Report -->
+      <section data-topic="Tahap 1: Blank Report">
+        <span class="step-badge">Tahap 1 &bull; Langkah 02</span>
+        <h2>Membuat Laporan Kosong Baru</h2>
+        <div class="step-grid">
+          <div>
+            <ol style="font-size:0.85em;">
+              <li>Klik menu <strong>Blank report</strong> (+ tanda tambah) untuk membuka lembar kerja kosong.</li>
+              <li>Sistem akan menginisiasi kanvas laporan baru dan otomatis membuka dialog koneksi data.</li>
+            </ol>
+            <div class="c-callout c-callout-info">
+              Looker Studio bekerja secara *cloud-native*, sehingga seluruh perubahan kanvas tersimpan secara otomatis di Google Drive.
+            </div>
+          </div>
+          <div>
+            <img src="img/sales/image5.png" alt="Membuat Blank Report Baru" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: Tahap 1 - Memilih Google Sheets Connector -->
+      <section data-topic="Tahap 1: Google Sheets Connector">
+        <span class="step-badge">Tahap 1 &bull; Langkah 03</span>
+        <h2>Memilih Konektor Google Sheets</h2>
+        <div class="step-grid">
+          <div>
+            <p>Pada jendela <em>"Add data to report"</em>:</p>
+            <ol style="font-size:0.85em;">
+              <li>Pilih opsi konektor <strong>Google Sheets</strong> di baris Google Connectors.</li>
+              <li>Konektor ini memungkinkan Looker Studio membaca data penjualan secara dinamis dan sinkron.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/sales/image6.png" alt="Memilih Konektor Google Sheets" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: Tahap 1 - Verifikasi Data di Google Sheets -->
+      <section data-topic="Tahap 1: Verifikasi Data Sheets">
+        <span class="step-badge">Tahap 1 &bull; Langkah 04</span>
+        <h2>Verifikasi Sumber Data di Google Sheets</h2>
+        <div class="step-grid">
+          <div>
+            <p>Pastikan file data penjualan telah terbuka di Google Sheets:</p>
+            <div class="c-card c-card-accent-top c-card-teal" style="margin-bottom:12px;">
+              <code style="font-size:0.95em; color:var(--ctp-teal);">https://docs.google.com/spreadsheets</code>
+            </div>
+            <ul style="font-size:0.8em;">
+              <li>Periksa kelengkapan kolom: <code>Order_Date</code>, <code>Region</code>, <code>Product_Category</code>, <code>Product_Sub_Category</code>, <code>Promotion_Name</code>, <code>Sales_Amount</code>, <code>Profit</code>, <code>Quantity</code>.</li>
+              <li>Pastikan baris pertama adalah judul kolom (*headers*).</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image7.png" alt="Google Sheets Data Verification" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: Tahap 1 - Koneksikan Spreadsheet ke Laporan -->
+      <section data-topic="Tahap 1: Add to Report">
+        <span class="step-badge">Tahap 1 &bull; Langkah 05</span>
+        <h2>Menambahkan Spreadsheet ke Laporan</h2>
+        <div class="step-grid">
+          <div>
+            <ol style="font-size:0.85em;">
+              <li>Pilih nama file spreadsheet dataset penjualan dari daftar file terbaru.</li>
+              <li>Pilih worksheet yang berisi tabel transaksi penjualan.</li>
+              <li>Pastikan centang <em>"Use first row as headers"</em> aktif.</li>
+              <li>Klik tombol biru <strong>Add</strong> di pojok kanan bawah.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/sales/image8.png" alt="Menghubungkan Spreadsheet ke Laporan" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAHAP 2: CUSTOMIZE BACKGROUND
+           ========================================================= -->
+
+      <!-- SLIDE 9: Tahap 2 - Kanvas Awal & Hapus Tabel Default -->
+      <section data-topic="Tahap 2: Kanvas Awal">
+        <span class="step-badge">Tahap 2 &bull; Langkah 06</span>
+        <h2>Menyiapkan Kanvas &amp; Hapus Tabel Bawaan</h2>
+        <div class="step-grid">
+          <div>
+            <p>Setelah data terhubung ke kanvas:</p>
+            <ul>
+              <li>Looker Studio secara otomatis meletakkan tabel bawaan acak.</li>
+              <li>Klik pada tabel bawaan tersebut dan tekan tombol <kbd>Delete</kbd> untuk mengosongkan kanvas.</li>
+              <li>Di bilah kanan terlihat panel <strong>Data</strong> yang memuat semua kolom dataset.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image9.png" alt="Kanvas Awal dan Hapus Tabel Default" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: Tahap 2 - Mengatur Tema & Latar Belakang -->
+      <section data-topic="Tahap 2: Theme and Layout">
+        <span class="step-badge">Tahap 2 &bull; Langkah 07</span>
+        <h2>Mengatur Theme and Layout Kanvas</h2>
+        <div class="step-grid">
+          <div>
+            <ol style="font-size:0.85em;">
+              <li>Klik menu <strong>Theme and Layout</strong> pada toolbar kanan atas.</li>
+              <li>Pada tab <em>Layout</em>, atur Display Mode: <strong>Fit to width</strong> dan Canvas Size: <strong>16:9 Landscape</strong>.</li>
+              <li>Pada tab <em>Theme</em>, pilih warna latar belakang lembut untuk kenyamanan membaca data.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/sales/image10.png" alt="Pengaturan Theme and Layout" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: Tahap 2 - Pembuatan Header Dashboard -->
+      <section data-topic="Tahap 2: Desain Header">
+        <span class="step-badge">Tahap 2 &bull; Langkah 08</span>
+        <h2>Mendesain Header Banner Dashboard</h2>
+        <div class="step-grid">
+          <div>
+            <p>Membangun struktur visual header laporan:</p>
+            <ul>
+              <li>Gunakan menu <strong>Insert &rarr; Rectangle</strong> untuk membuat kotak pita header di bagian paling atas kanvas.</li>
+              <li>Tambahkan teks judul laporan: <strong>SALES PERFORMANCE DASHBOARD</strong>.</li>
+              <li>Sediakan area di sisi kanan header untuk penempatan kontrol filter wilayah.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image11.png" alt="Desain Header Banner Dashboard" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAHAP 3: SCORECARDS (KPI UTAMA)
+           ========================================================= -->
+
+      <!-- SLIDE 12: Tahap 3 - Menambahkan Komponen Scorecard -->
+      <section data-topic="Tahap 3: Add Scorecard">
+        <span class="step-badge">Tahap 3 &bull; Langkah 09</span>
+        <h2>Menambahkan Komponen Scorecard Pertama</h2>
+        <div class="step-grid">
+          <div>
+            <p>Scorecard berfungsi menyajikan angka metrik ringkasan eksekutif secara instan:</p>
+            <ol style="font-size:0.85em;">
+              <li>Klik menu <strong>Add a chart</strong> di toolbar atas.</li>
+              <li>Pilih ikon <strong>Scorecard</strong>.</li>
+              <li>Letakkan scorecard pertama di bawah kotak header laporan.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/sales/image12.png" alt="Memilih Komponen Scorecard" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 13: Tahap 3 - Menempatkan Scorecard di Kanvas -->
+      <section data-topic="Tahap 3: Posisi Scorecard">
+        <span class="step-badge">Tahap 3 &bull; Langkah 10</span>
+        <h2>Menempatkan Scorecard di Sisi Kiri</h2>
+        <div class="step-grid">
+          <div>
+            <p>Atur ukuran dan posisi scorecard:</p>
+            <ul>
+              <li>Posisikan di area kiri atas untuk menjadi indikator KPI utama pertama: <strong>Total Sales</strong>.</li>
+              <li>Scorecard akan memuat metrik default dari dataset secara otomatis.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image13.png" alt="Menempatkan Scorecard di Kanvas" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 14: Tahap 3 - Setup Metrik Scorecard 1 (Sales) -->
+      <section data-topic="Tahap 3: Setup Metrik Sales">
+        <span class="step-badge">Tahap 3 &bull; Langkah 11</span>
+        <h2>Setup Metrik Scorecard 1: Total Sales</h2>
+        <div class="step-grid">
+          <div>
+            <p>Pada panel <strong>Setup</strong> di bilah kanan:</p>
+            <ul>
+              <li>Tarik kolom <code>Sales_Amount</code> (atau <code>Sales</code>) ke dalam slot <strong>Metric</strong>.</li>
+              <li>Pastikan agregasi diset ke <strong>SUM</strong>.</li>
+              <li>Ubah nama label metrik menjadi <em>"Total Sales"</em>.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image14.png" alt="Setup Metrik Total Sales" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 15: Tahap 3 - Kustomisasi Style Scorecard 1 -->
+      <section data-topic="Tahap 3: Style Scorecard">
+        <span class="step-badge">Tahap 3 &bull; Langkah 12</span>
+        <h2>Kustomisasi Style &amp; Format Angka Scorecard</h2>
+        <div class="step-grid">
+          <div>
+            <p>Buka tab <strong>Style</strong> pada panel kanan:</p>
+            <ul>
+              <li>Centang opsi <strong>"Compact numbers"</strong> jika nominal mencapai angka jutaan/miliaran.</li>
+              <li>Atur perataan teks (Alignment) ke <strong>Center</strong>.</li>
+              <li>Beri warna background kartu putih bersih dengan radius border 10px.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image15.png" alt="Kustomisasi Style Scorecard" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 16: Tahap 3 - Duplikasi Scorecard 2 (Total Profit) -->
+      <section data-topic="Tahap 3: Duplikasi Scorecard 2">
+        <span class="step-badge">Tahap 3 &bull; Langkah 13</span>
+        <h2>Duplikasi &amp; Setup Scorecard 2: Total Profit</h2>
+        <div class="step-grid">
+          <div>
+            <p>Cara cepat membuat scorecard dengan style seragam:</p>
+            <ol style="font-size:0.85em;">
+              <li>Salin Scorecard 1 dengan tombol <kbd>Ctrl+C</kbd> lalu tempel <kbd>Ctrl+V</kbd>.</li>
+              <li>Letakkan di sebelah kanan Scorecard 1.</li>
+              <li>Ganti metriknya menjadi <strong><code>Profit</code></strong> (Agregasi: <code>SUM</code>).</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/sales/image16.png" alt="Duplikasi Scorecard 2 Total Profit" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 17: Tahap 3 - Duplikasi Scorecard 3 (Quantity) -->
+      <section data-topic="Tahap 3: Scorecard Quantity">
+        <span class="step-badge">Tahap 3 &bull; Langkah 14</span>
+        <h2>Menambahkan Scorecard 3: Total Quantity</h2>
+        <div class="step-grid">
+          <div>
+            <p>Menampilkan total unit produk yang berhasil terjual:</p>
+            <ul>
+              <li>Duplikasi scorecard berikutnya ke sisi kanan.</li>
+              <li>Ganti metrik menjadi <strong><code>Quantity</code></strong> (Agregasi: <code>SUM</code>).</li>
+              <li>Ubah label menjadi <em>"Total Quantity"</em>.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image17.png" alt="Setup Scorecard 3 Total Quantity" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 18: Tahap 3 - Penataan Simetris 4 Scorecard KPI -->
+      <section data-topic="Tahap 3: 4 Scorecards KPI Selesai">
+        <span class="step-badge">Tahap 3 &bull; Langkah 15</span>
+        <h2>Menyelaraskan 4 Scorecards KPI di Kanvas</h2>
+        <div class="step-grid">
+          <div>
+            <div class="c-callout c-callout-success">
+              <strong>Tahap 3 Selesai:</strong> 4 kartu KPI (Total Sales, Total Profit, Total Quantity, dan KPI Margin/Transaksi) kini tertata rapi dan simetris di bagian atas kanvas.
+            </div>
+            <p style="font-size:0.85em;">
+              Gunakan fitur <em>Arrange &rarr; Distribute Horizontally</em> untuk jarak antar kartu yang sempurna.
+            </p>
+          </div>
+          <div>
+            <img src="img/sales/image23.png" alt="4 Scorecards KPI Selesai" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAHAP 4: CREATE TABLE
+           ========================================================= -->
+
+      <!-- SLIDE 19: Tahap 4 - Menambahkan Komponen Table -->
+      <section data-topic="Tahap 4: Add Table">
+        <span class="step-badge">Tahap 4 &bull; Langkah 16</span>
+        <h2>Menambahkan Komponen Table Analitis</h2>
+        <div class="step-grid">
+          <div>
+            <p>Tabel menyajikan rincian data multidimensi secara terperinci:</p>
+            <ol style="font-size:0.85em;">
+              <li>Klik menu <strong>Add a chart</strong> di toolbar atas.</li>
+              <li>Pilih komponen <strong>Table</strong>.</li>
+              <li>Posisikan di bawah jajaran Scorecards.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/sales/image24.png" alt="Memilih Komponen Table" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 20: Tahap 4 - Setup Tabel 1: Product Category -->
+      <section data-topic="Tahap 4: Tabel 1 Product Category">
+        <span class="step-badge">Tahap 4 &bull; Langkah 17</span>
+        <h2>Setup Tabel 1: Kategori Produk &amp; Metrik</h2>
+        <div class="step-grid">
+          <div>
+            <p>Konfigurasi data pada panel Setup:</p>
+            <ul>
+              <li><strong>Dimension:</strong> <code>Product_Category</code>.</li>
+              <li><strong>Metrics:</strong> <code>Sales_Amount</code> dan <code>Profit</code>.</li>
+              <li><strong>Sort:</strong> Berdasarkan <code>Sales_Amount</code> Descending.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image26.png" alt="Setup Data Tabel Product Category" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 21: Tahap 4 - Matikan Row Numbers -->
+      <section data-topic="Tahap 4: Matikan Row Numbers">
+        <span class="step-badge">Tahap 4 &bull; Langkah 18</span>
+        <h2>Aturan Style Tabel: Matikan Row Numbers</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Matikan Row Numbers"</em>
+            </div>
+            <p style="font-size:0.85em; margin-top:10px;">
+              Kolom nomor urut baris (1, 2, 3...) memakan ruang horizontal kanvas:
+            </p>
+            <ul>
+              <li>Buka tab <strong>Style</strong> pada tabel.</li>
+              <li>Hilangkan centang pada opsi <strong>"Show row numbers"</strong>.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image27.png" alt="Matikan Row Numbers pada Tabel" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 22: Tahap 4 - Matikan Pagination (Top 8 / Top 5) -->
+      <section data-topic="Tahap 4: Matikan Pagination">
+        <span class="step-badge">Tahap 4 &bull; Langkah 19</span>
+        <h2>Matikan Pagination: Tampilkan Top 5 / Top 8</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Set off pagination, use Top 8 data or Top 5"</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li>Di tab Style bagian <em>Table Footer</em>, nonaktifkan pagination.</li>
+              <li>Di tab Setup, batasi <strong>Rows per page</strong> ke <strong>5 atau 8</strong> data teratas.</li>
+              <li>Tabel menjadi ringkas dan tidak memunculkan kontrol halaman berlebih.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image28.png" alt="Set off pagination Top 8" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 23: Tahap 4 - Modifikasi Style Tabel (Heatmap Bar) -->
+      <section data-topic="Tahap 4: Modif Style Table">
+        <span class="step-badge">Tahap 4 &bull; Langkah 20</span>
+        <h2>Modifikasi Visual Style Tabel</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Modif Style Table"</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li>Ubah tampilan kolom metrik menjadi <strong>Bar / Heatmap</strong> visual di tab Style.</li>
+              <li>Atur warna header tabel dan aktifkan garis pembatas yang rapi.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image29.png" alt="Modifikasi Style Tabel" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 24: Tahap 4 - Sub Category & Promotion Name -->
+      <section data-topic="Tahap 4: Tabel Sub Kategori &amp; Promosi">
+        <span class="step-badge">Tahap 4 &bull; Langkah 21</span>
+        <h2>Tabel Sub Category &amp; Promotion Name</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Perubahan data Product Sub Category pada tabel tiga , dan Promotion Name pada tabel 4."</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li><strong>Tabel 2/3:</strong> Ganti dimensi menjadi <code>Product_Sub_Category</code>.</li>
+              <li><strong>Tabel 4:</strong> Ganti dimensi menjadi <code>Promotion_Name</code>.</li>
+              <li>Susun tabel berdampingan untuk analisis komparatif.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image33.png" alt="Tabel Sub Category dan Promotion Name" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAHAP 5: CREATE CHART (STACKED BAR)
+           ========================================================= -->
+
+      <!-- SLIDE 25: Tahap 5 - Menambahkan Stacked Bar Chart -->
+      <section data-topic="Tahap 5: Add Bar Chart">
+        <span class="step-badge">Tahap 5 &bull; Langkah 22</span>
+        <h2>Menambahkan Grafik Batang (Bar Chart)</h2>
+        <div class="step-grid">
+          <div>
+            <p>Visualisasi grafik untuk membandingkan proporsi kategori:</p>
+            <ol style="font-size:0.85em;">
+              <li>Klik menu <strong>Add a chart</strong>.</li>
+              <li>Pilih <strong>Bar Chart / Column Chart</strong>.</li>
+              <li>Tempatkan di sisi kanan tabel analitis.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/sales/image34.png" alt="Memilih Bar Chart" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 26: Tahap 5 - Setup Dimensi Sumbu & Breakdown -->
+      <section data-topic="Tahap 5: Setup Dimensi Grafik">
+        <span class="step-badge">Tahap 5 &bull; Langkah 23</span>
+        <h2>Setup Dimensi Sumbu &amp; Breakdown Kategori</h2>
+        <div class="step-grid">
+          <div>
+            <p>Konfigurasi pada panel Setup:</p>
+            <ul>
+              <li><strong>Dimension:</strong> <code>Region</code> atau <code>Order_Date</code> (Bulan).</li>
+              <li><strong>Breakdown Dimension:</strong> Masukkan <code>Product_Category</code>.</li>
+              <li><strong>Metric:</strong> <code>Sales_Amount</code> (SUM).</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image37.png" alt="Setup Dimensi dan Breakdown Kategori" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 27: Tahap 5 - Aktifkan Stacked Bar -->
+      <section data-topic="Tahap 5: Aktifkan Stacked Bar">
+        <span class="step-badge">Tahap 5 &bull; Langkah 24</span>
+        <h2>Mengaktifkan Fitur Stacked Bar Chart</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Aktifkan Stacked Bar"</em>
+            </div>
+            <p style="font-size:0.85em; margin-top:10px;">
+              Mengubah balok yang berdampingan menjadi balok bertumpuk:
+            </p>
+            <ul>
+              <li>Buka tab <strong>Style</strong> pada chart.</li>
+              <li>Centang opsi <strong>"Stacked bars"</strong>.</li>
+              <li>Batang kategori produk kini bertumpuk rapi memperlihatkan total omzet gabungan per segmen.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image39.png" alt="Aktifkan Stacked Bar" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 28: Tahap 5 - Matikan Legenda di Sebelah Kiri -->
+      <section data-topic="Tahap 5: Matikan Legend Kiri">
+        <span class="step-badge">Tahap 5 &bull; Langkah 25</span>
+        <h2>Mematikan Legenda di Sebelah Kiri</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box">
+              <span class="material-symbols-outlined" style="color:var(--ctp-peach);">notes</span>
+              <em>Catatan Modul: "Matikan legenda di sebelah kiri"</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li>Legenda di sebelah kiri mempersempit lebar grafik secara signifikan.</li>
+              <li>Pindahkan posisi Legend ke <strong>Top (Atas)</strong> atau <strong>None</strong> agar grafik dapat melebar optimal.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image40.png" alt="Matikan Legenda Sebelah Kiri" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 29: Tahap 5 - Menambahkan Grafik Tren Pendamping -->
+      <section data-topic="Tahap 5: Grafik Tren Pendamping">
+        <span class="step-badge">Tahap 5 &bull; Langkah 26</span>
+        <h2>Menambahkan Grafik Tren Pendamping</h2>
+        <div class="step-grid">
+          <div>
+            <p>Melengkapi analisis visual dengan tren runtun waktu:</p>
+            <ul>
+              <li>Tambahkan grafik garis tren penjualan bulanan di bawah stacked bar chart.</li>
+              <li>Atur dimensi tanggal bulanan dan metrik laba/omzet.</li>
+              <li>Beri border dan sudut membulat yang selaras.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image44.png" alt="Menambahkan Grafik Tren Pendamping" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAHAP 6: FILTER & KONTROL REGION
+           ========================================================= -->
+
+      <!-- SLIDE 30: Tahap 6 - Menambahkan Dropdown Control -->
+      <section data-topic="Tahap 6: Add Dropdown Control">
+        <span class="step-badge">Tahap 6 &bull; Langkah 27</span>
+        <h2>Menambahkan Kontrol Filter Drop-Down List</h2>
+        <div class="step-grid">
+          <div>
+            <p>Menjadikan dashboard interaktif dengan kontrol penyaring data:</p>
+            <ol style="font-size:0.85em;">
+              <li>Klik menu <strong>Add a control</strong> di toolbar atas.</li>
+              <li>Pilih opsi <strong>Drop-down list</strong>.</li>
+              <li>Letakkan di sudut kanan atas sejajar dengan pita Header.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/sales/image47.png" alt="Menambahkan Drop-Down List Control" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 31: Tahap 6 - Control Field Region & Hapus Metric -->
+      <section data-topic="Tahap 6: Setup Filter Region">
+        <span class="step-badge">Tahap 6 &bull; Langkah 28 (Poin Kritis)</span>
+        <h2>Ganti Control Field Region &amp; Hapus Metric Price</h2>
+        <div class="step-grid">
+          <div>
+            <div class="step-card-box" style="border-left: 4px solid var(--ctp-red);">
+              <span class="material-symbols-outlined" style="color:var(--ctp-red);">error</span>
+              <em>Catatan Modul: "Ganti Control Field dengan Region, dan Hapus Metric (Price) nya ."</em>
+            </div>
+            <ul style="font-size:0.85em; margin-top:10px;">
+              <li><strong>Control Field:</strong> Ganti menjadi kolom <code>Region</code>.</li>
+              <li><strong>Metric:</strong> Klik tombol silang (x) untuk <strong>menghapus metrik</strong> dari filter agar dropdown murni menampilkan daftar nama wilayah tanpa angka harga.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image48.png" alt="Setup Filter Region dan Hapus Metric" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 32: Tahap 6 - Tambah Date Range Control -->
+      <section data-topic="Tahap 6: Date Range Control">
+        <span class="step-badge">Tahap 6 &bull; Langkah 29</span>
+        <h2>Menambahkan Date Range Controller</h2>
+        <div class="step-grid">
+          <div>
+            <p>Memberikan fleksibilitas filter waktu:</p>
+            <ul>
+              <li>Pilih menu <strong>Add a control &rarr; Date range control</strong>.</li>
+              <li>Posisikan berdampingan dengan filter Region di header.</li>
+              <li>Pengguna dapat menyaring data berdasarkan kuartal, tahun, atau tanggal kustom.</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image50.png" alt="Menambahkan Date Range Control" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 33: Tahap 6 - Uji Interaktivitas Filter Region -->
+      <section data-topic="Tahap 6: Uji Coba Filter">
+        <span class="step-badge">Tahap 6 &bull; Langkah 30</span>
+        <h2>Uji Coba Interaktivitas Filter Wilayah</h2>
+        <div class="step-grid">
+          <div>
+            <p>Klik tombol <strong>View</strong> di pojok kanan atas untuk mencoba dashboard:</p>
+            <ul>
+              <li>Pilih salah satu wilayah (misal: <em>Central</em> atau <em>West</em>).</li>
+              <li>Seluruh Scorecard KPI, Tabel Produk, dan Stacked Bar Chart akan otomatis memperbarui nilainya secara real-time!</li>
+            </ul>
+          </div>
+          <div>
+            <img src="img/sales/image52.png" alt="Uji Coba Filter Wilayah Dinamis" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================================================
+           TAHAP 7: SHARING & EMBED
+           ========================================================= -->
+
+      <!-- SLIDE 34: Tahap 7 - Mengambil Kode Embed Iframe -->
+      <section data-topic="Tahap 7: Embed Report Looker">
+        <span class="step-badge">Tahap 7 &bull; Langkah 31</span>
+        <h2>Mengambil Kode Embed Iframe di Looker Studio</h2>
+        <div class="step-grid">
+          <div>
+            <ol style="font-size:0.85em;">
+              <li>Klik menu <strong>File &rarr; Embed report</strong> di Looker Studio.</li>
+              <li>Centang kotak <strong>"Enable embedding"</strong>.</li>
+              <li>Pilih opsi <strong>Embed Code</strong> untuk menghasilkan tag HTML <code>&lt;iframe&gt;</code>.</li>
+              <li>Salin kode tersebut untuk disematkan di web atau materi presentasi.</li>
+            </ol>
+          </div>
+          <div>
+            <img src="img/sales/image53.png" alt="Mengambil Kode Embed Iframe" class="step-screenshot">
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 35: Tampilan Utuh Hasil Akhir Dashboard Sales -->
+      <section data-topic="Hasil Akhir Dashboard Sales">
+        <span class="step-badge" style="background:rgba(64,160,43,0.15); color:var(--ctp-green);">Final Masterpiece</span>
+        <h2>Tampilan Penuh Dashboard Sales Enterprise</h2>
+        <p style="font-size:0.85em; color:var(--ctp-subtext0); margin-bottom:8px;">
+          Dashboard terintegrasi siap produksi: 4 KPI Scorecards, Multi-Tabel Analitis, Stacked Bar Chart, dan Kontrol Filter Region.
+        </p>
+        <img src="img/sales/image54.png" alt="Dashboard Sales Looker Studio Final" class="step-screenshot-full">
+      </section>
+
+      <!-- SLIDE 36: Live Iframe Embed Interaktif -->
+      <section data-topic="Live Embed Dashboard">
+        <span class="step-badge">Slide 61 &bull; Live Embed</span>
+        <h2>Live Preview: Dashboard Sales Interaktif</h2>
+        <p style="font-size:0.82em; color:var(--ctp-subtext0); margin-bottom:6px;">
+          Laporan Google Looker Studio resmi yang disematkan langsung menggunakan kode iframe dari modul HTA.
+        </p>
+        <div style="width: 100%; border-radius: 12px; overflow: hidden; border: 1.5px solid var(--ctp-surface1); box-shadow: var(--shadow-md); background: #ffffff;">
+          <iframe 
+            width="100%" 
+            height="420" 
+            src="https://lookerstudio.google.com/embed/reporting/133ef525-eaa9-45e8-b40d-4f5e7b48f918/page/ZKxcF" 
+            frameborder="0" 
+            style="border:0; display:block;" 
+            allowfullscreen 
+            sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
+          </iframe>
+        </div>
+      </section>
+
+      <!-- SLIDE 37: Rangkuman Pelatihan Lengkap -->
+      <section data-topic="Rangkuman Pelatihan">
+        <span class="slide-category-label">Kesimpulan Masterclass</span>
+        <h2>Rangkuman 4 Modul Penguasaan Data Analyst</h2>
+        <p>Integrasi kurikulum lengkap dari fondasi analisis data hingga implementasi Business Intelligence.</p>
+
+        <div class="grid-4" style="margin-top: 14px;">
+          <div class="c-card c-card-accent-top c-card-blue">
+            <h4>Modul 1: Pengenalan</h4>
+            <p style="font-size:0.75em;">Standar SKKNI, identifikasi kebutuhan bisnis, SMART framework, dan dimensi 5W+1H.</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-teal">
+            <h4>Modul 2: Understanding</h4>
+            <p style="font-size:0.75em;">Objek data, fakta vs dimensi, profiling statistik, imputasi missing values, dan EDA visual.</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-peach">
+            <h4>Modul 3: Warmindo</h4>
+            <p style="font-size:0.75em;">Studi kasus F&amp;B: tren omzet bulanan, top 5 menu laris, dan donat jenis pemesanan.</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-mauve">
+            <h4>Modul 4: Sales BI</h4>
+            <p style="font-size:0.75em;">Enterprise dashboard: scorecards KPI, multi-tabel, stacked bar, filter region, &amp; iframe embed.</p>
+          </div>
+        </div>
+
+        <div class="c-callout c-callout-success" style="margin-top: 14px;">
+          <span class="material-symbols-outlined" style="color:var(--ctp-green);">workspace_premium</span>
+          <div>
+            <strong>Selamat!</strong> Anda telah menyelesaikan seluruh panduan visual pembuatan dashboard data analyst berstandar industri!
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 38: Sesi Diskusi & Penutup -->
+      <section data-topic="Sesi Tanya Jawab">
+        <div style="text-align: center; padding-top: 36px;">
+          <span class="material-symbols-outlined" style="font-size: 72px; color: var(--ctp-blue); margin-bottom: 12px;">military_tech</span>
+          <h2>Sesi Diskusi, Evaluasi &amp; Penutup</h2>
+          <p style="font-size: 1.1em; color: var(--ctp-subtext0); max-width: 620px; margin: 0 auto 20px auto;">
+            Terima kasih telah mengikuti seluruh rangkaian pelatihan Data Analyst Masterclass. Silakan ajukan pertanyaan penutup atau konsultasikan proyek portofolio Anda.
+          </p>
+          <div class="c-card" style="display:inline-block; padding: 12px 24px; text-align:center;">
+            <strong>Hartanto Tantriawan, S.Kom., M.Kom.</strong><br>
+            <span style="font-family: var(--font-mono); font-size: 0.85em; color: var(--ctp-blue);">hartanto.tantriawan@if.itera.ac.id</span>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Persistent Edge-to-Edge Deck Footer -->
+  <footer class="deck-footer">
+    <div class="deck-footer-left">
+      <span class="deck-footer-code">DA-2026</span>
+      <span class="deck-footer-sep">&#x2022;</span>
+      <span class="deck-footer-dept">Modul 04: Dashboard Sales</span>
+    </div>
+
+    <div class="deck-footer-center">
+      <button type="button" id="deck-footer-topic" class="deck-footer-topic" onclick="toggleTopicPopover(event)" title="Daftar Isi &amp; Navigasi Cepat Slide (Klik)">
+        <span id="deck-footer-topic-text" class="deck-footer-topic-text">Modul 04 &bull; Dashboard Sales Enterprise (Step by Step)</span>
+        <span class="material-symbols-outlined deck-footer-topic-icon">expand_less</span>
+      </button>
+    </div>
+
+    <div class="deck-footer-right">
+      <button type="button" class="deck-footer-btn" onclick="Reveal.prev()" title="Slide Sebelumnya (&#x2190; / P)" aria-label="Slide Sebelumnya">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+      <button type="button" class="deck-counter-btn" onclick="Reveal.toggleOverview()" title="Klik untuk Matriks Seluruh Slide (Esc/O)">
+        <span id="deck-slide-current">01</span><span class="deck-counter-sep">/</span><span id="deck-slide-total">38</span>
+      </button>
+      <button type="button" class="deck-footer-btn" onclick="Reveal.next()" title="Slide Berikutnya (&#x2192; / Space / N)" aria-label="Slide Berikutnya">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Floating Slide Topic Navigation Popover (Bottom-Up) -->
+  <div class="deck-topic-popover" id="deck-topic-popover">
+    <div class="deck-popover-search-wrap">
+      <input type="text" id="deck-topic-search" class="deck-popover-search" placeholder="Cari langkah atau slide..." oninput="filterTopicList(this.value)">
+    </div>
+    <div class="deck-topic-list" id="deck-topic-list">
+      <!-- Generated dynamically by buildTopicIndex() -->
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="shortcuts-modal" id="shortcuts-modal" onclick="closeShortcutsModal(event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Pintasan Keyboard Presentasi</h3>
+        <button class="modal-close" onclick="closeShortcutsModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcut-row"><span>Slide Berikutnya</span><div><kbd class="kbd-key">Space</kbd> / <kbd class="kbd-key">&rarr;</kbd></div></div>
+        <div class="shortcut-row"><span>Slide Sebelumnya</span><div><kbd class="kbd-key">&larr;</kbd> / <kbd class="kbd-key">P</kbd></div></div>
+        <div class="shortcut-row"><span>Tinjauan Matriks (Overview)</span><div><kbd class="kbd-key">Esc</kbd> / <kbd class="kbd-key">O</kbd></div></div>
+        <div class="shortcut-row"><span>Layar Penuh (Fullscreen)</span><div><kbd class="kbd-key">F</kbd></div></div>
+        <div class="shortcut-row"><span>Catatan Pembicara (Speaker Notes)</span><div><kbd class="kbd-key">S</kbd></div></div>
+        <div class="shortcut-row"><span>Buka/Tutup Panduan Pintasan</span><div><kbd class="kbd-key">?</kbd></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reveal.js Scripts and Plugins from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+
+  <script>
+    let currentAspectMode = localStorage.getItem('reveal_aspect_mode') || 'auto';
+
+    function calculateResponsiveDimensions(mode) {
+      const winW = window.innerWidth;
+      const winH = window.innerHeight - 86.5;
+      const ratio = winW / winH;
+
+      if (mode === '16-9') {
+        return { width: 1280, height: 720, label: '16:9' };
+      } else if (mode === '16-10') {
+        return { width: 1280, height: 800, label: '16:10' };
+      } else if (mode === '4-3') {
+        return { width: 1024, height: 768, label: '4:3' };
+      } else if (mode === 'mobile') {
+        return { width: 750, height: 1000, label: 'Mobile' };
+      } else if (mode === 'text-large') {
+        return { width: 960, height: 540, label: 'Teks Besar' };
+      } else {
+        if (winW <= 768 || ratio < 1.15) {
+          return { width: 750, height: Math.max(900, Math.round(750 / Math.max(0.5, ratio))), label: 'Auto' };
+        } else if (ratio >= 1.65) {
+          return { width: 1280, height: 720, label: 'Auto' };
+        } else if (ratio >= 1.45) {
+          return { width: 1280, height: 800, label: 'Auto' };
+        } else {
+          return { width: 1024, height: 768, label: 'Auto' };
+        }
+      }
+    }
+
+    const initialDim = calculateResponsiveDimensions(currentAspectMode);
+
+    Reveal.initialize({
+      width: initialDim.width,
+      height: initialDim.height,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      hash: true,
+      slideNumber: false,
+      controls: false,
+      progress: false,
+      center: true,
+      touch: true,
+      transition: 'slide',
+      backgroundTransition: 'none',
+      plugins: [ RevealNotes, RevealHighlight, RevealMath.KaTeX ]
+    });
+
+    function updateDeckState(event) {
+      const indices = event ? { h: event.indexh, v: event.indexv } : Reveal.getIndices();
+      const totalSlides = Reveal.getTotalSlides();
+      const currentIdx = indices ? indices.h : 0;
+
+      const progressBar = document.getElementById('deck-progress-bar');
+      if (progressBar) {
+        const progressPercent = totalSlides > 1 ? (currentIdx / (totalSlides - 1)) * 100 : 0;
+        progressBar.style.width = progressPercent + '%';
+      }
+
+      const currentEl = document.getElementById('deck-slide-current');
+      const totalEl = document.getElementById('deck-slide-total');
+      if (currentEl) currentEl.textContent = String(currentIdx + 1).padStart(2, '0');
+      if (totalEl) totalEl.textContent = String(totalSlides).padStart(2, '0');
+
+      const topicEl = document.getElementById('deck-footer-topic-text');
+      if (topicEl) {
+        if (currentIdx === 0) {
+          topicEl.textContent = 'Modul 04 • Dashboard Sales Enterprise (Step by Step)';
+        } else {
+          const currentSlide = Reveal.getCurrentSlide();
+          if (currentSlide) {
+            const topicAttr = currentSlide.getAttribute('data-topic');
+            if (topicAttr) {
+              topicEl.textContent = topicAttr;
+            } else {
+              const heading = currentSlide.querySelector('h2') || currentSlide.querySelector('h1');
+              topicEl.textContent = heading ? heading.textContent.trim() : 'Modul 04 • Dashboard Sales Enterprise';
+            }
+          }
+        }
+      }
+
+      updateActiveTopicItem(currentIdx);
+    }
+
+    Reveal.on('ready', event => {
+      document.body.classList.add('reveal-ready');
+      updateDeckState(event);
+      buildTopicIndex();
+    });
+    Reveal.on('slidechanged', updateDeckState);
+
+    function buildTopicIndex() {
+      const listEl = document.getElementById('deck-topic-list');
+      if (!listEl) return;
+
+      const slides = document.querySelectorAll('.reveal .slides > section');
+      let htmlStr = '';
+
+      slides.forEach((slide, idx) => {
+        const topicAttr = slide.getAttribute('data-topic');
+        const h1 = slide.querySelector('h1');
+        const h2 = slide.querySelector('h2');
+        let title = topicAttr || (h2 ? h2.textContent.trim() : (h1 ? h1.textContent.trim() : `Slide ${idx + 1}`));
+        const numStr = String(idx + 1).padStart(2, '0');
+
+        htmlStr += `
+          <div class="deck-topic-item" data-slide-index="${idx}" onclick="jumpToSlide(${idx})">
+            <span class="deck-topic-num">${numStr}</span>
+            <span class="deck-topic-name" title="${title}">${title}</span>
+          </div>
+        `;
+      });
+
+      listEl.innerHTML = htmlStr;
+      const currentIdx = Reveal.getIndices ? Reveal.getIndices().h : 0;
+      updateActiveTopicItem(currentIdx);
+    }
+
+    function updateActiveTopicItem(currentIdx) {
+      document.querySelectorAll('.deck-topic-item').forEach(item => {
+        const idx = parseInt(item.getAttribute('data-slide-index'), 10);
+        item.classList.toggle('active', idx === currentIdx);
+      });
+    }
+
+    function toggleTopicPopover(e) {
+      if (e) e.stopPropagation();
+      const popover = document.getElementById('deck-topic-popover');
+      const btn = document.getElementById('deck-footer-topic');
+      if (!popover) return;
+
+      const isActive = popover.classList.toggle('active');
+      if (btn) btn.classList.toggle('active', isActive);
+
+      if (isActive) {
+        const activeItem = popover.querySelector('.deck-topic-item.active');
+        if (activeItem) {
+          activeItem.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
+        const searchInput = document.getElementById('deck-topic-search');
+        if (searchInput) {
+          searchInput.value = '';
+          filterTopicList('');
+          setTimeout(() => searchInput.focus(), 80);
+        }
+      }
+    }
+
+    function closeTopicPopover() {
+      const popover = document.getElementById('deck-topic-popover');
+      const btn = document.getElementById('deck-footer-topic');
+      if (popover) popover.classList.remove('active');
+      if (btn) btn.classList.remove('active');
+    }
+
+    function jumpToSlide(index) {
+      Reveal.slide(index);
+      closeTopicPopover();
+    }
+
+    function filterTopicList(query) {
+      const q = (query || '').toLowerCase().trim();
+      const items = document.querySelectorAll('.deck-topic-item');
+      items.forEach(item => {
+        const num = (item.querySelector('.deck-topic-num') || {}).textContent || '';
+        const name = (item.querySelector('.deck-topic-name') || {}).textContent || '';
+        const matches = !q || num.toLowerCase().includes(q) || name.toLowerCase().includes(q);
+        item.style.display = matches ? 'grid' : 'none';
+      });
+    }
+
+    function setAspectMode(mode) {
+      currentAspectMode = mode;
+      localStorage.setItem('reveal_aspect_mode', mode);
+
+      const dim = calculateResponsiveDimensions(mode);
+
+      Reveal.configure({
+        width: dim.width,
+        height: dim.height,
+        margin: 0.04,
+        minScale: 0.2,
+        maxScale: 2.0
+      });
+
+      document.body.classList.remove('aspect-16-9', 'aspect-16-10', 'aspect-4-3', 'aspect-mobile');
+      if (mode === 'auto') {
+        if (window.innerWidth <= 768) document.body.classList.add('aspect-mobile');
+      } else {
+        document.body.classList.add('aspect-' + mode);
+      }
+
+      const labelEl = document.getElementById('aspect-label');
+      if (labelEl) labelEl.textContent = dim.label;
+
+      document.querySelectorAll('.dropdown-item').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-aspect') === mode);
+      });
+
+      closeAspectDropdown();
+      setTimeout(() => Reveal.layout(), 50);
+    }
+
+    function toggleAspectDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('aspect-menu');
+      if (menu) menu.classList.toggle('active');
+    }
+
+    function closeAspectDropdown() {
+      const menu = document.getElementById('aspect-menu');
+      if (menu) menu.classList.remove('active');
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) closeAspectDropdown();
+      if (!e.target.closest('#deck-topic-popover') && !e.target.closest('#deck-footer-topic')) closeTopicPopover();
+    });
+
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        if (currentAspectMode === 'auto') {
+          const dim = calculateResponsiveDimensions('auto');
+          const cfg = Reveal.getConfig();
+          if (cfg.width !== dim.width || cfg.height !== dim.height) {
+            Reveal.configure({ width: dim.width, height: dim.height });
+            const labelEl = document.getElementById('aspect-label');
+            if (labelEl) labelEl.textContent = dim.label;
+            Reveal.layout();
+          }
+        }
+      }, 200);
+    });
+
+    function openShortcutsModal() {
+      document.getElementById('shortcuts-modal').classList.add('active');
+    }
+
+    function closeShortcutsModal(event) {
+      if (!event || event.target.id === 'shortcuts-modal' || event.target.classList.contains('modal-close')) {
+        document.getElementById('shortcuts-modal').classList.remove('active');
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const popover = document.getElementById('deck-topic-popover');
+        if (popover && popover.classList.contains('active')) {
+          e.preventDefault();
+          e.stopPropagation();
+          closeTopicPopover();
+          return;
+        }
+      }
+      if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+        const modal = document.getElementById('shortcuts-modal');
+        modal.classList.toggle('active');
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', function() {
+      setAspectMode(currentAspectMode);
+    });
+  </script>
+
+</body>
+</html>

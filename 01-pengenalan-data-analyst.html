@@ -1,0 +1,1072 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Modul 1: Pengenalan Data Analyst | Catppuccin Deck</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+
+  <!-- Catppuccin Latte Design System -->
+  <link rel="stylesheet" href="css/catppuccin-latte.css">
+</head>
+
+<body>
+
+  <!-- Persistent Edge-to-Edge Deck Header -->
+  <header class="deck-header">
+    <div class="deck-header-left">
+      <a href="index.html" class="deck-brand-link" title="Kembali ke Portal Modul Data Analyst">
+        <img src="assets/img/logo_2.webp" alt="Logo ITERA" class="deck-logo">
+        <img src="assets/img/dikti-saintek-berdampak-color.svg" alt="Logo Dikti" class="deck-logo">
+      </a>
+    </div>
+
+    <div class="deck-header-right">
+      <!-- Aspect Ratio / Projector Switcher -->
+      <div class="nav-dropdown">
+        <button type="button" class="deck-ctrl-btn" id="aspect-btn" onclick="toggleAspectDropdown(event)" title="Sesuaikan Rasio Layar & Proyektor">
+          <span class="material-symbols-outlined">aspect_ratio</span>
+          <span id="aspect-label" class="deck-btn-label">Auto</span>
+          <span class="material-symbols-outlined" style="font-size: 14px;">arrow_drop_down</span>
+        </button>
+        <div class="nav-dropdown-menu" id="aspect-menu">
+          <button type="button" class="dropdown-item active" data-aspect="auto" onclick="setAspectMode('auto')">
+            <span class="item-title">Auto</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="16-9" onclick="setAspectMode('16-9')">
+            <span class="item-title">16:9</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="16-10" onclick="setAspectMode('16-10')">
+            <span class="item-title">16:10</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="4-3" onclick="setAspectMode('4-3')">
+            <span class="item-title">4:3</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="mobile" onclick="setAspectMode('mobile')">
+            <span class="item-title">Mobile</span>
+          </button>
+          <button type="button" class="dropdown-item" data-aspect="text-large" onclick="setAspectMode('text-large')">
+            <span class="item-title">Teks Besar</span>
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="deck-ctrl-btn" onclick="Reveal.toggleOverview()" title="Lihat Matriks Seluruh Slide (Esc/O)">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="deck-btn-label">Overview</span>
+      </button>
+      <button type="button" class="deck-ctrl-btn" onclick="openShortcutsModal()" title="Panduan Pintasan Keyboard (?)">
+        <span class="material-symbols-outlined">keyboard</span>
+        <span class="deck-btn-label">Pintasan</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hairline Visual Progress Bar -->
+  <div class="deck-progress-track">
+    <div class="deck-progress-bar" id="deck-progress-bar"></div>
+  </div>
+
+  <!-- Reveal.js Container -->
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: Title Slide -->
+      <section data-topic="Pengenalan Data Analyst">
+        <div style="margin-bottom: 14px;">
+          <span class="c-badge c-badge-blue">
+            <span class="material-symbols-outlined">school</span> Modul 01 &bull; Refreshment &amp; Sertifikasi
+          </span>
+        </div>
+        <h1>Pengenalan Data Analyst</h1>
+        <p style="font-size: 1.1em; color: var(--ctp-subtext0); max-width: 860px; margin-bottom: 24px;">
+          Fondasi Profesi, Standar Kompetensi Kerja Nasional Indonesia (SKKNI), Kebutuhan Bisnis, serta Metodologi Pengumpulan Data.
+        </p>
+        <div class="grid-3" style="max-width: 880px;">
+          <div class="c-card c-card-accent-top c-card-blue">
+            <h4>Instruktur</h4>
+            <p><strong>Hartanto Tantriawan, S.Kom., M.Kom.</strong></p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-mauve">
+            <h4>Standar Acuan</h4>
+            <p>SKKNI Data Science &amp; Data Management</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-teal">
+            <h4>Fokus Modul</h4>
+            <p>Business Alignment &amp; Data Pipeline</p>
+          </div>
+        </div>
+        <aside class="notes">
+          Selamat datang pada modul pertama. Di sesi ini kita akan membedah peran strategis Data Analyst dalam organisasi modern berdasarkan standar SKKNI.
+        </aside>
+      </section>
+
+      <!-- SLIDE 2: Definisi & Pilar Data Analyst -->
+      <section data-topic="Definisi &amp; Pilar Data Analyst">
+        <span class="slide-category-label">Konsep Dasar</span>
+        <h2>Apa itu Data Analyst?</h2>
+        <p>Profesional yang menjembatani data mentah menjadi keputusan bisnis bernilai tinggi.</p>
+        
+        <div class="c-callout c-callout-info">
+          <span class="material-symbols-outlined" style="font-size: 26px; color: var(--ctp-blue);">psychology</span>
+          <div>
+            <strong>Definisi Formal:</strong> Seseorang yang bertanggung jawab mengumpulkan, membersihkan, menganalisis, dan menginterpretasikan data menggunakan keterampilan statistik, matematika, dan pemrograman untuk membantu organisasi memahami data dan mengambil keputusan yang lebih baik.
+          </div>
+        </div>
+
+        <div class="grid-4" style="margin-top: 16px;">
+          <div class="c-card c-card-accent-top c-card-blue">
+            <h3><span class="material-symbols-outlined" style="color: var(--ctp-blue);">functions</span> Statistik</h3>
+            <p>Pemahaman distribusi, korelasi, sampling, uji hipotesis, dan metrik tendensi sentral.</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-teal">
+            <h3><span class="material-symbols-outlined" style="color: var(--ctp-teal);">code</span> Tools &amp; SQL</h3>
+            <p>Ekstraksi data via SQL, manipulasi data dengan Pandas/Python, spreadsheet, dan visualisasi BI.</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-peach">
+            <h3><span class="material-symbols-outlined" style="color: var(--ctp-peach);">storefront</span> Domain Bisnis</h3>
+            <p>Memahami model bisnis, proses operasional, metrik KPI industri, dan dinamika pasar.</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-mauve">
+            <h3><span class="material-symbols-outlined" style="color: var(--ctp-mauve);">record_voice_over</span> Storytelling</h3>
+            <p>Kemampuan mengemas wawasan teknis menjadi narasi bisnis yang mudah dipahami stakeholder.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: 6 Karakteristik Utama Data Analyst Unggul -->
+      <section data-topic="Profil &amp; Karakteristik">
+        <span class="slide-category-label">Profil Profesional</span>
+        <h2>6 Karakteristik Data Analyst Unggul</h2>
+        <p>Kombinasi soft skills dan hard skills yang membedakan analis biasa dari analis berdampak.</p>
+
+        <div class="grid-3" style="margin-top: 12px;">
+          <div class="c-card">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+              <span class="c-num-circle c-num-blue">1</span>
+              <h3 style="margin:0;">Beretika</h3>
+            </div>
+            <p>Menjaga kerahasiaan data sensitif, privasi pelanggan (GDPR/UU PDP), dan tidak memanipulasi angka demi kepentingan tertentu.</p>
+          </div>
+          <div class="c-card">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+              <span class="c-num-circle c-num-mauve">2</span>
+              <h3 style="margin:0;">Komunikatif</h3>
+            </div>
+            <p>Mampu menerjemahkan hasil komputasi yang rumit menjadi rekomendasi aksi bisnis yang actionable dan lugas.</p>
+          </div>
+          <div class="c-card">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+              <span class="c-num-circle c-num-green">3</span>
+              <h3 style="margin:0;">Bekerja dalam Tim</h3>
+            </div>
+            <p>Berkolaborasi lintas divisi dengan Software Engineer, Product Manager, tim Sales, hingga C-level.</p>
+          </div>
+          <div class="c-card">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+              <span class="c-num-circle c-num-peach">4</span>
+              <h3 style="margin:0;">Teliti &amp; Cermat</h3>
+            </div>
+            <p>Memiliki ketajaman mengidentifikasi anomali, inkonsistensi tipe data, missing values, dan skewness distribusi.</p>
+          </div>
+          <div class="c-card">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+              <span class="c-num-circle c-num-teal">5</span>
+              <h3 style="margin:0;">Berpikir Kritis</h3>
+            </div>
+            <p>Selalu mempertanyakan asumsi di balik data: "Mengapa tren ini naik?", "Apakah korelasi ini kausalitas?".</p>
+          </div>
+          <div class="c-card">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+              <span class="c-num-circle c-num-blue">6</span>
+              <h3 style="margin:0;">Agile Learner</h3>
+            </div>
+            <p>Terus beradaptasi dengan teknologi mutakhir: AI augmentasi, modern data stack, dan automated analytics.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: Tanggung Jawab & Wewenang -->
+      <section data-topic="Tanggung Jawab &amp; Wewenang">
+        <span class="slide-category-label">Struktur Tugas</span>
+        <h2>Tanggung Jawab vs Wewenang</h2>
+        <p>Batasan peran operasional dan kewenangan strategis Data Analyst dalam organisasi.</p>
+
+        <div class="grid-2" style="margin-top: 14px;">
+          <div class="c-card c-card-accent-top c-card-blue">
+            <h3><span class="material-symbols-outlined" style="color:var(--ctp-blue);">task</span> Tanggung Jawab (Responsibility)</h3>
+            <ul>
+              <li><strong>Mengumpulkan &amp; Menyiapkan Data:</strong> Mengambil data dari aneka sumber (DB, API, file log) dan membersihkannya.</li>
+              <li><strong>Menganalisis Pola:</strong> Mengolah data kuantitatif dan kualitatif guna menemukan tren historis dan pola tersembunyi.</li>
+              <li><strong>Menginterpretasikan Hasil:</strong> Menerjemahkan output matematis menjadi wawasan yang bermakna bagi proses bisnis.</li>
+              <li><strong>Memelihara Integritas:</strong> Menjamin keakuratan data yang disajikan pada dashboard dan laporan operasional.</li>
+            </ul>
+          </div>
+
+          <div class="c-card c-card-accent-top c-card-mauve">
+            <h3><span class="material-symbols-outlined" style="color:var(--ctp-mauve);">military_tech</span> Wewenang (Authority)</h3>
+            <ul>
+              <li><strong>Menyampaikan Hasil Analisis:</strong> Mempresentasikan laporan kepada stakeholder dan audiens yang tepat pada forum rapat.</li>
+              <li><strong>Memberikan Rekomendasi Solusi:</strong> Menyarankan tindakan bisnis berbasis data (misal: "Stop promosi X, alihkan budget ke regional Y").</li>
+              <li><strong>Menentukan Teknik Pemilihan Data:</strong> Memutuskan kolom, sampel, dan kriteria filter yang relevan untuk proyek.</li>
+              <li><strong>Audit Kualitas Data:</strong> Memberi feedback dan menolak dataset mentah jika tingkat ketidaklengkapan melebihi ambang toleransi.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: Jenjang Karir Data Track -->
+      <section data-topic="Jenjang Karir">
+        <span class="slide-category-label">Peta Perkembangan</span>
+        <h2>Jenjang Karir Data Analytics</h2>
+        <p>Pilihan lintasan karir vertikal dan spesialisasi lintas disiplin data modern.</p>
+
+        <div class="pipeline-flow" style="grid-template-columns: repeat(4, 1fr); margin: 20px 0;">
+          <div class="pipeline-step">
+            <span class="c-badge c-badge-blue" style="margin-bottom:6px;">Entry</span>
+            <h4>Analis Data Muda</h4>
+            <p style="font-size: 0.75em;">Junior Analyst: Data scraping, data entry, basic SQL, pembuatan visualisasi spreadsheet.</p>
+          </div>
+          <div class="pipeline-step">
+            <span class="c-badge c-badge-teal" style="margin-bottom:6px;">Mid</span>
+            <h4>Data Analyst</h4>
+            <p style="font-size: 0.75em;">Analisis eksploratif mendalam, query SQL kompleks, automated reporting, business insights.</p>
+          </div>
+          <div class="pipeline-step">
+            <span class="c-badge c-badge-mauve" style="margin-bottom:6px;">Senior / Spec</span>
+            <h4>BI Specialist</h4>
+            <p style="font-size: 0.75em;">Arsitektur data mart, dashboard enterprise, semantic layer, data governance.</p>
+          </div>
+          <div class="pipeline-step">
+            <span class="c-badge c-badge-peach" style="margin-bottom:6px;">Advanced</span>
+            <h4>Data Scientist</h4>
+            <p style="font-size: 0.75em;">Predictive modeling, machine learning pipelines, inferential statistics, big data platforms.</p>
+          </div>
+        </div>
+
+        <div class="c-callout c-callout-success">
+          <span class="material-symbols-outlined" style="color:var(--ctp-green);">verified_user</span>
+          <div>
+            <strong>Persyaratan Sertifikasi SKKNI:</strong> Minimal mahasiswa D4/S1 semester VIII bidang Saintek, ATAU memiliki sertifikat pelatihan berbasis kompetensi Data Analyst, ATAU telah berpengalaman kerja sebagai Data Analyst minimal 1 tahun.
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: 7 Unit Kompetensi SKKNI Data Analyst -->
+      <section data-topic="Unit Kompetensi SKKNI">
+        <span class="slide-category-label">Standar Profesi</span>
+        <h2>7 Unit Kompetensi SKKNI Data Analyst</h2>
+        <p>Acuan baku Kepmenaker &amp; BNSP untuk sertifikasi keahlian bidang analisis data.</p>
+
+        <table class="c-table">
+          <thead>
+            <tr>
+              <th style="width: 8%;">No</th>
+              <th style="width: 25%;">Kode Unit</th>
+              <th>Judul Unit Kompetensi</th>
+              <th style="width: 25%;">Fokus Inti</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><code>J.62DMS00.001.1</code></td>
+              <td><strong>Mengidentifikasi kebutuhan pengelolaan data untuk proses bisnis</strong></td>
+              <td>Tujuan analisis, 5W+1H, SMART</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td><code>J.62DMI00.004.1</code></td>
+              <td><strong>Mengumpulkan Data</strong></td>
+              <td>Manual, API, Web Scraping, DB</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td><code>J.62DMI00.005.1</code></td>
+              <td><strong>Menelaah Data</strong></td>
+              <td>Tipe data, relasi, statistik deskriptif</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td><code>J.62DMI00.006.1</code></td>
+              <td><strong>Memvalidasi Data</strong></td>
+              <td>Kelengkapan, konsistensi, outlier</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><code>J.62DMI00.007.1</code></td>
+              <td><strong>Menentukan Objek Data</strong></td>
+              <td>Fakta vs Dimensi, pemilihan atribut</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><code>J.62DMS00.015.1</code></td>
+              <td><strong>Membuat Business Intelligence</strong></td>
+              <td>Dashboard interaktif, KPI metrics</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td><code>M.70BDA00.013.1</code></td>
+              <td><strong>Menyusun Laporan Hasil Analisis</strong></td>
+              <td>Narasi bisnis &amp; rekomendasi aksi</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- SLIDE 7: KUK-1: Menentukan Tujuan Analisis Data -->
+      <section data-topic="Kebutuhan Proses Bisnis">
+        <span class="slide-category-label">KUK-1 Analisis Kebutuhan</span>
+        <h2>Menyelaraskan Data dengan Kebutuhan Bisnis</h2>
+        <p>Analisis data yang efektif selalu berpijak pada masalah nyata, bukan sekadar menggambar grafik.</p>
+
+        <div class="grid-2">
+          <div class="c-card c-card-accent-top c-card-blue">
+            <h3><span class="material-symbols-outlined" style="color:var(--ctp-blue);">lightbulb</span> Mindset Analitis</h3>
+            <p>Sebelum membuka dataset di Python atau Looker Studio, jawablah 3 pertanyaan mendasar ini:</p>
+            <ol style="margin-top:8px;">
+              <li><strong>Masalah apa yang sedang dihadapi?</strong> (Contoh: Penjualan produk kategori elektronik merosot 15% di kuartal 3).</li>
+              <li><strong>Informasi apa yang ingin mereka ketahui?</strong> (Apakah ada masalah pada harga, promo kompetitor, atau stok habis?).</li>
+              <li><strong>Keputusan apa yang akan diambil berdasarkan hasil analisis?</strong> (Menambah promo, mengubah vendor, atau reposisi harga).</li>
+            </ol>
+          </div>
+
+          <div class="c-card c-card-accent-top c-card-peach">
+            <h3><span class="material-symbols-outlined" style="color:var(--ctp-peach);">warning</span> Jebakan Data Analyst Pemula</h3>
+            <div class="con-box" style="margin-bottom: 8px;">
+              <h5><span class="material-symbols-outlined">close</span> Vanity Metrics</h5>
+              Fokus menampilkan angka-angka besar yang terlihat keren tapi tidak memberikan implikasi tindakan langsung (misal: jumlah impresi vs konversi omzet).
+            </div>
+            <div class="pro-box">
+              <h5><span class="material-symbols-outlined">check</span> Actionable Insights</h5>
+              Menghasilkan analisis yang langsung menjawab: "Apa yang harus dilakukan selanjutnya?".
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: SMART Goals Framework -->
+      <section data-topic="SMART Goals Framework">
+        <span class="slide-category-label">Metodologi Perumusan</span>
+        <h2>Prinsip SMART dalam Menentukan Tujuan Analisis</h2>
+        <p>Memastikan setiap sasaran riset data memiliki parameter yang terukur dan berorientasi hasil.</p>
+
+        <div class="grid-3" style="gap: 12px; margin-top: 14px;">
+          <div class="c-card">
+            <h4><span class="c-badge c-badge-blue">S</span> Specific</h4>
+            <p>Tujuan jelas dan tidak bias umum. Bukan "ingin meningkatkan omzet", melainkan "menganalisis churn rate pelanggan premium".</p>
+          </div>
+          <div class="c-card">
+            <h4><span class="c-badge c-badge-teal">M</span> Measurable</h4>
+            <p>Dapat dihitung secara kuantitatif dengan metrik data konkret (persentase, rasio konversi, margin keuntungan).</p>
+          </div>
+          <div class="c-card">
+            <h4><span class="c-badge c-badge-green">A</span> Achievable</h4>
+            <p>Dapat dijawab secara realistis menggunakan dataset yang dimiliki atau yang dapat diakses oleh organisasi.</p>
+          </div>
+          <div class="c-card">
+            <h4><span class="c-badge c-badge-peach">R</span> Relevant</h4>
+            <p>Terkoneksi langsung dengan prioritas strategis organisasi (profitabilitas, kepuasan pelanggan, efisiensi operasional).</p>
+          </div>
+          <div class="c-card">
+            <h4><span class="c-badge c-badge-mauve">T</span> Time-bound</h4>
+            <p>Memiliki rentang waktu analisis yang pasti, misal "analisis transaksi Q1 s.d Q3 2026".</p>
+          </div>
+          <div class="c-card" style="background: rgba(30, 102, 245, 0.05); border: 1px dashed var(--ctp-blue);">
+            <h4 style="color: var(--ctp-blue);"><span class="material-symbols-outlined">flag</span> Contoh Goals</h4>
+            <p style="font-size: 0.78em;"><em>"Mengidentifikasi 3 faktor penyebab penurunan retensi pelanggan tier Gold sebesar 8% dalam periode 6 bulan terakhir."</em></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: Identifikasi Komponen Data: 5W + 1H -->
+      <section data-topic="Dimensi Data 5W+1H">
+        <span class="slide-category-label">Identifikasi Variabel</span>
+        <h2>Dimensi 5W + 1H dalam Pengumpulan Data</h2>
+        <p>Framework komprehensif untuk memastikan tidak ada variabel penting yang tertinggal.</p>
+
+        <table class="c-table">
+          <thead>
+            <tr>
+              <th style="width: 14%;">Dimensi</th>
+              <th style="width: 28%;">Pertanyaan Analisis</th>
+              <th>Contoh Atribut Data</th>
+              <th style="width: 22%;">Bentuk Entitas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="c-badge c-badge-blue">WHAT</span></td>
+              <td>Apa produk, layanan, atau event yang dianalisis?</td>
+              <td><code>product_id</code>, <code>item_name</code>, <code>category</code>, <code>sku</code></td>
+              <td>Master Produk / Service</td>
+            </tr>
+            <tr>
+              <td><span class="c-badge c-badge-mauve">WHO</span></td>
+              <td>Siapa pihak yang melakukan transaksi atau interaksi?</td>
+              <td><code>customer_id</code>, <code>age</code>, <code>gender</code>, <code>staff_id</code></td>
+              <td>Master Pelanggan / User</td>
+            </tr>
+            <tr>
+              <td><span class="c-badge c-badge-teal">WHERE</span></td>
+              <td>Di mana peristiwa transaksi tersebut terjadi?</td>
+              <td><code>store_location</code>, <code>city</code>, <code>region</code>, <code>ip_address</code></td>
+              <td>Dimensi Lokasi / Geografis</td>
+            </tr>
+            <tr>
+              <td><span class="c-badge c-badge-peach">WHEN</span></td>
+              <td>Kapan transaksi atau interaksi tersebut dicatat?</td>
+              <td><code>timestamp</code>, <code>transaction_date</code>, <code>day_of_week</code>, <code>hour</code></td>
+              <td>Dimensi Waktu / Temporal</td>
+            </tr>
+            <tr>
+              <td><span class="c-badge c-badge-maroon">WHY</span></td>
+              <td>Mengapa pelanggan bertransaksi atau membatalkan?</td>
+              <td><code>refund_reason</code>, <code>cancellation_type</code>, <code>feedback_score</code></td>
+              <td>Feedback / Atribut Kualitatif</td>
+            </tr>
+            <tr>
+              <td><span class="c-badge c-badge-green">HOW</span></td>
+              <td>Bagaimana cara transaksi tersebut dieksekusi?</td>
+              <td><code>payment_method</code>, <code>channel</code> (App/Web/Store), <code>promo_code</code></td>
+              <td>Metode Operasional</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- SLIDE 10: Pemetaan Kategori Data Bisnis -->
+      <section data-topic="Kategori Data Bisnis">
+        <span class="slide-category-label">Arsitektur Data Organisasi</span>
+        <h2>Pemetaan Data Berdasarkan Kategori</h2>
+        <p>Mengelompokkan data perusahaan ke dalam pilar fungsional untuk memudahkan agregasi.</p>
+
+        <div class="grid-3" style="margin-top: 14px;">
+          <div class="c-card c-card-accent-top c-card-blue">
+            <h3>📦 Data Operasional</h3>
+            <p>Log transaksi harian, inventori persediaan stok, alur rantai pasok (supply chain), kapasitas produksi pabrik.</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-teal">
+            <h3>👥 Data Pelanggan</h3>
+            <p>Profil demografis, riwayat pembelian, status keanggotaan loyalty, preferensi kategori, rating dan ulasan.</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-green">
+            <h3>📈 Data Keuangan</h3>
+            <p>Omzet kotor (GMV), pendapatan bersih (Net Revenue), COGS, pengeluaran operasional (OPEX), dan profit margin.</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-peach">
+            <h3>📊 Data Marketing</h3>
+            <p>Biaya kampanye iklan (CAC), impresi iklan, click-through rate (CTR), voucher diskon, dan efektivitas channel.</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-mauve">
+            <h3>⏱ Data Temporal</h3>
+            <p>Tanggal transaksi, durasi penyelesaian pesanan, waktu respons tiket keluhan, perbandingan YoY dan MoM.</p>
+          </div>
+          <div class="c-card c-card-accent-top c-card-lavender">
+            <h3>🌍 Data Geografis</h3>
+            <p>Kota pengiriman, kode pos, zonasi wilayah regional (Barat/Pusat/Timur), performa gerai cabang.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: 4 Teknik Pengumpulan Data -->
+      <section data-topic="Teknik Pengumpulan Data">
+        <span class="slide-category-label">Data Sourcing</span>
+        <h2>4 Metode Pengumpulan Data Modern</h2>
+        <p>Cara memperoleh bahan mentah analisis sesuai dengan ketersediaan dan infrastruktur teknologi.</p>
+
+        <div class="grid-2" style="margin-top: 14px;">
+          <div class="c-card">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="c-badge c-badge-blue">Metode 1</span>
+              <h3 style="margin:0;">Pengambilan Manual</h3>
+            </div>
+            <p style="margin-top:8px;">Mengunduh file flat (CSV, Excel, JSON) dari repositori publik (Kaggle, BPS, Satu Data Indonesia, World Bank) atau export dari aplikasi akuntansi.</p>
+            <div class="c-callout c-callout-info" style="margin-top:8px; padding:6px 10px;">
+              Cocok untuk analisis ad-hoc dan eksplorasi awal.
+            </div>
+          </div>
+
+          <div class="c-card">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="c-badge c-badge-teal">Metode 2</span>
+              <h3 style="margin:0;">Koneksi API (Application Interface)</h3>
+            </div>
+            <p style="margin-top:8px;">Mengakses endpoint RESTful API terstruktur menggunakan library HTTP (Requests) dengan otentikasi API Key/Token (e.g., Kaggle API, Twitter API, Weather API).</p>
+            <div class="c-callout c-callout-success" style="margin-top:8px; padding:6px 10px;">
+              Otomatis, terjadwal, dan real-time.
+            </div>
+          </div>
+
+          <div class="c-card">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="c-badge c-badge-peach">Metode 3</span>
+              <h3 style="margin:0;">Web Scraping</h3>
+            </div>
+            <p style="margin-top:8px;">Mengekstrak data tabular atau teks langsung dari struktur HTML website menggunakan library seperti BeautifulSoup atau Selenium ketika API tidak tersedia.</p>
+            <div class="c-callout c-callout-warning" style="margin-top:8px; padding:6px 10px;">
+              Perhatikan etika scraping &amp; robots.txt.
+            </div>
+          </div>
+
+          <div class="c-card">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="c-badge c-badge-mauve">Metode 4</span>
+              <h3 style="margin:0;">Query Database Relasional</h3>
+            </div>
+            <p style="margin-top:8px;">Menghubungkan langsung ke DBMS enterprise (PostgreSQL, MySQL, BigQuery, Snowflake) menggunakan query SQL dengan filter waktu dan JOIN tabel spesifik.</p>
+            <div class="c-callout c-callout-info" style="margin-top:8px; padding:6px 10px;">
+              Standar baku industri skala produksi.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 12: Pipeline Web Scraping dengan BeautifulSoup -->
+      <section data-topic="Praktik Web Scraping">
+        <span class="slide-category-label">Hands-On Code</span>
+        <h2>Alur Ekstraksi Data via Web Scraping</h2>
+        <p>Langkah baku ekstraksi data dari halaman web HTML ke dalam format DataFrame Pandas.</p>
+
+        <div class="grid-2">
+          <div>
+            <div class="pipeline-flow" style="grid-template-columns: 1fr; gap: 8px;">
+              <div class="pipeline-step" style="text-align:left; padding:8px 12px;">
+                <strong>1. Tentukan Target URL</strong><br>
+                <small>Pastikan laman bersifat publik dan periksa kebijakan lisensi data.</small>
+              </div>
+              <div class="pipeline-step" style="text-align:left; padding:8px 12px;">
+                <strong>2. Request HTTP (GET)</strong><br>
+                <small>Gunakan <code>requests.get(url)</code> untuk mengunduh kode HTML mentah.</small>
+              </div>
+              <div class="pipeline-step" style="text-align:left; padding:8px 12px;">
+                <strong>3. Parsing HTML DOM</strong><br>
+                <small>Ekstrak tag <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>, dan <code>&lt;td&gt;</code> dengan BeautifulSoup.</small>
+              </div>
+              <div class="pipeline-step" style="text-align:left; padding:8px 12px;">
+                <strong>4. Muat ke Pandas DataFrame</strong><br>
+                <small>Konversi baris tabel menjadi DataFrame terstruktur untuk dianalisis.</small>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <pre><code class="language-python">import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+# 1. Unduh halaman
+url = "https://example.com/liga-klasemen"
+headers = {"User-Agent": "Mozilla/5.0"}
+resp = requests.get(url, headers=headers)
+
+# 2. Parsing elemen tabel
+soup = BeautifulSoup(resp.text, "html.parser")
+table = soup.find("table", {"id": "data-ranking"})
+
+# 3. Ekstraksi baris data
+rows = []
+for tr in table.find_all("tr")[1:]:
+    cols = [td.get_text(strip=True) for td in tr.find_all("td")]
+    if cols:
+        rows.append(cols)
+
+# 4. Buat DataFrame
+df = pd.DataFrame(rows, columns=["Peringkat", "Klub", "Main", "Poin"])
+print(df.head())</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 13: Template 9 Elemen Perencanaan Analisis -->
+      <section data-topic="Template Perencanaan Analisis">
+        <span class="slide-category-label">Best Practice Industri</span>
+        <h2>Template Dokumen Analisis Data: 9 Elemen</h2>
+        <p>Format standar SKKNI untuk mendokumentasikan inisiasi proyek sebelum data diolah.</p>
+
+        <table class="c-table">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Elemen Perencanaan</th>
+              <th>Deskripsi &amp; Panduan Pengisian</th>
+              <th style="width: 30%;">Contoh Kasus Toko Retail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Permasalahan</strong></td>
+              <td>Kendala bisnis nyata yang memicu dilakukannya riset.</td>
+              <td>Tingginya barang retur (refund) pada produk busana.</td>
+            </tr>
+            <tr>
+              <td><strong>2. Tujuan Analisis</strong></td>
+              <td>Sasaran spesifik yang ingin dicapai melalui data.</td>
+              <td>Menemukan penyebab utama retur produk busana.</td>
+            </tr>
+            <tr>
+              <td><strong>3. Pertanyaan Kunci</strong></td>
+              <td>Daftar pertanyaan yang harus dijawab oleh analisis.</td>
+              <td>Kategori mana yang paling banyak diretur? Mengapa?</td>
+            </tr>
+            <tr>
+              <td><strong>4. Sumber Data</strong></td>
+              <td>Asal data yang akan ditarik (internal/eksternal).</td>
+              <td>Database PostgreSQL tabel <code>orders</code> &amp; <code>returns</code>.</td>
+            </tr>
+            <tr>
+              <td><strong>5. Metode Analisis</strong></td>
+              <td>Teknik analisis yang akan digunakan.</td>
+              <td>Statistik deskriptif &amp; pareto chart analisis.</td>
+            </tr>
+            <tr>
+              <td><strong>6. Output yang Diharapkan</strong></td>
+              <td>Bentuk penyerahan hasil kerja.</td>
+              <td>Dashboard interaktif di Looker Studio &amp; Executive Summary.</td>
+            </tr>
+            <tr>
+              <td><strong>7. Rentang Waktu Data</strong></td>
+              <td>Horizon temporal data yang dijadikan sampel.</td>
+              <td>1 Januari 2026 s.d. 30 Juni 2026 (Semester 1).</td>
+            </tr>
+            <tr>
+              <td><strong>8. Stakeholder Penerima</strong></td>
+              <td>Audiens pengambil keputusan yang dituju.</td>
+              <td>Head of Merchandising &amp; Quality Control Lead.</td>
+            </tr>
+            <tr>
+              <td><strong>9. Dampak yang Diharapkan</strong></td>
+              <td>Value atau potensi efisiensi finansial yang tercipta.</td>
+              <td>Menurunkan return rate sebesar 5% pada Q3.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- SLIDE 14: Tata Kelola Aset Data Organisasi -->
+      <section data-topic="Tata Kelola &amp; Integrasi">
+        <span class="slide-category-label">Infrastruktur &amp; Governance</span>
+        <h2>Tata Kelola &amp; Integrasi Data Organisasi</h2>
+        <p>Memastikan aset data terintegrasi, memiliki silsilah (lineage), dan terjamin mutunya.</p>
+
+        <div class="grid-3" style="margin-top: 14px;">
+          <div class="c-card c-card-accent-top c-card-blue">
+            <h3><span class="material-symbols-outlined" style="color:var(--ctp-blue);">hub</span> Data Integration</h3>
+            <p>Arsitektur menggabungkan data silo dari departemen terpisah:</p>
+            <ul>
+              <li><strong>ETL / ELT:</strong> Extract, Transform, Load ke Data Warehouse.</li>
+              <li><strong>Hub-and-Spoke:</strong> Sentralisasi repositori data organisasi.</li>
+            </ul>
+          </div>
+
+          <div class="c-card c-card-accent-top c-card-teal">
+            <h3><span class="material-symbols-outlined" style="color:var(--ctp-teal);">route</span> Data Lineage</h3>
+            <p>Mendokumentasikan silsilah asal-usul data:</p>
+            <ul>
+              <li>Dari database mana kolom dibuat?</li>
+              <li>Transformasi rumus apa saja yang telah dialami data?</li>
+              <li>Siapa pemilik sah (data owner) dari tabel tersebut?</li>
+            </ul>
+          </div>
+
+          <div class="c-card c-card-accent-top c-card-mauve">
+            <h3><span class="material-symbols-outlined" style="color:var(--ctp-mauve);">policy</span> Data Governance</h3>
+            <p>Standar keamanan dan kepatuhan hukum:</p>
+            <ul>
+              <li>Role-Based Access Control (RBAC) pada data sensitif.</li>
+              <li>Anonimisasi PII (Personally Identifiable Information).</li>
+              <li>SLA ketersediaan dan keandalan data mart.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 15: Rangkuman & Checklist Kompetensi -->
+      <section data-topic="Rangkuman Modul 1">
+        <span class="slide-category-label">Review &amp; Refleksi</span>
+        <h2>Rangkuman Inti Modul 1</h2>
+        <p>Poin-poin kunci yang wajib dikuasai untuk sertifikasi kompetensi Data Analyst.</p>
+
+        <div class="grid-2" style="margin-top: 14px;">
+          <div class="c-card">
+            <h3 style="color:var(--ctp-blue);"><span class="material-symbols-outlined">checklist</span> Checklist Kualifikasi</h3>
+            <ul>
+              <li>Mampu mendefinisikan peran, tanggung jawab, dan kode etik Data Analyst.</li>
+              <li>Memahami peta 7 unit kompetensi SKKNI bidang data science.</li>
+              <li>Mampu merumuskan masalah bisnis menggunakan prinsip <strong>SMART Goals</strong>.</li>
+              <li>Mampu membedah dimensi variabel bisnis melalui formula <strong>5W + 1H</strong>.</li>
+              <li>Mengetahui keunggulan dan limitasi teknik <strong>Manual, API, Scraping, dan SQL</strong>.</li>
+              <li>Dapat menyusun dokumen <strong>Template 9 Elemen Analisis Data</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="c-card" style="display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+            <div style="font-size: 54px; margin-bottom: 8px;">🚀</div>
+            <h3>Siap Melangkah ke Tahap Berikutnya!</h3>
+            <p style="max-width: 400px; margin-bottom: 16px;">Pada Modul 2, kita akan langsung terjun melakukan audit teknis struktur data, data cleaning, dan eksplorasi statistik.</p>
+            <a href="02-data-understanding.html" class="c-badge c-badge-blue" style="font-size: 0.9em; padding: 8px 16px; text-decoration:none;">
+              Lanjut ke Modul 2: Data Understanding &rarr;
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 16: Q&A Slide -->
+      <section data-topic="Sesi Tanya Jawab">
+        <div style="text-align: center; padding-top: 40px;">
+          <span class="material-symbols-outlined" style="font-size: 72px; color: var(--ctp-blue); margin-bottom: 12px;">help_center</span>
+          <h2>Sesi Diskusi &amp; Tanya Jawab</h2>
+          <p style="font-size: 1.1em; color: var(--ctp-subtext0); max-width: 600px; margin: 0 auto 24px auto;">
+            Silakan ajukan pertanyaan terkait ruang lingkup karir Data Analyst, standar SKKNI, maupun metodologi perumusan masalah bisnis.
+          </p>
+          <div style="font-family: var(--font-mono); font-size: 0.9em; color: var(--ctp-subtext1);">
+            Hartanto Tantriawan, S.Kom., M.Kom. &bull; hartanto.tantriawan@if.itera.ac.id
+          </div>
+        </div>
+        <aside class="notes">Beri kesempatan peserta untuk bertanya dan diskusikan studi kasus nyata dari pengalaman peserta.</aside>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Persistent Edge-to-Edge Deck Footer -->
+  <footer class="deck-footer">
+    <div class="deck-footer-left">
+      <span class="deck-footer-code">DA-2026</span>
+      <span class="deck-footer-sep">&#x2022;</span>
+      <span class="deck-footer-dept">Modul 01: Pengenalan Data Analyst</span>
+    </div>
+
+    <div class="deck-footer-center">
+      <button type="button" id="deck-footer-topic" class="deck-footer-topic" onclick="toggleTopicPopover(event)" title="Daftar Isi &amp; Navigasi Cepat Slide (Klik)">
+        <span id="deck-footer-topic-text" class="deck-footer-topic-text">Modul 01 &bull; Pengenalan Data Analyst</span>
+        <span class="material-symbols-outlined deck-footer-topic-icon">expand_less</span>
+      </button>
+    </div>
+
+    <div class="deck-footer-right">
+      <button type="button" class="deck-footer-btn" onclick="Reveal.prev()" title="Slide Sebelumnya (&#x2190; / P)" aria-label="Slide Sebelumnya">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+      <button type="button" class="deck-counter-btn" onclick="Reveal.toggleOverview()" title="Klik untuk Matriks Seluruh Slide (Esc/O)">
+        <span id="deck-slide-current">01</span><span class="deck-counter-sep">/</span><span id="deck-slide-total">16</span>
+      </button>
+      <button type="button" class="deck-footer-btn" onclick="Reveal.next()" title="Slide Berikutnya (&#x2192; / Space / N)" aria-label="Slide Berikutnya">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+    </div>
+  </footer>
+
+  <!-- Floating Slide Topic Navigation Popover (Bottom-Up) -->
+  <div class="deck-topic-popover" id="deck-topic-popover">
+    <div class="deck-popover-search-wrap">
+      <input type="text" id="deck-topic-search" class="deck-popover-search" placeholder="Cari slide..." oninput="filterTopicList(this.value)">
+    </div>
+    <div class="deck-topic-list" id="deck-topic-list">
+      <!-- Generated dynamically by buildTopicIndex() -->
+    </div>
+  </div>
+
+  <!-- Shortcuts Modal -->
+  <div class="shortcuts-modal" id="shortcuts-modal" onclick="closeShortcutsModal(event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Pintasan Keyboard Presentasi</h3>
+        <button class="modal-close" onclick="closeShortcutsModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcut-row"><span>Slide Berikutnya</span><div><kbd class="kbd-key">Space</kbd> / <kbd class="kbd-key">&rarr;</kbd></div></div>
+        <div class="shortcut-row"><span>Slide Sebelumnya</span><div><kbd class="kbd-key">&larr;</kbd> / <kbd class="kbd-key">P</kbd></div></div>
+        <div class="shortcut-row"><span>Tinjauan Matriks (Overview)</span><div><kbd class="kbd-key">Esc</kbd> / <kbd class="kbd-key">O</kbd></div></div>
+        <div class="shortcut-row"><span>Layar Penuh (Fullscreen)</span><div><kbd class="kbd-key">F</kbd></div></div>
+        <div class="shortcut-row"><span>Catatan Pembicara (Speaker Notes)</span><div><kbd class="kbd-key">S</kbd></div></div>
+        <div class="shortcut-row"><span>Buka/Tutup Panduan Pintasan</span><div><kbd class="kbd-key">?</kbd></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reveal.js Scripts and Plugins from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/math/math.js"></script>
+
+  <script>
+    let currentAspectMode = localStorage.getItem('reveal_aspect_mode') || 'auto';
+
+    function calculateResponsiveDimensions(mode) {
+      const winW = window.innerWidth;
+      const winH = window.innerHeight - 86.5;
+      const ratio = winW / winH;
+
+      if (mode === '16-9') {
+        return { width: 1280, height: 720, label: '16:9' };
+      } else if (mode === '16-10') {
+        return { width: 1280, height: 800, label: '16:10' };
+      } else if (mode === '4-3') {
+        return { width: 1024, height: 768, label: '4:3' };
+      } else if (mode === 'mobile') {
+        return { width: 750, height: 1000, label: 'Mobile' };
+      } else if (mode === 'text-large') {
+        return { width: 960, height: 540, label: 'Teks Besar' };
+      } else {
+        if (winW <= 768 || ratio < 1.15) {
+          return { width: 750, height: Math.max(900, Math.round(750 / Math.max(0.5, ratio))), label: 'Auto' };
+        } else if (ratio >= 1.65) {
+          return { width: 1280, height: 720, label: 'Auto' };
+        } else if (ratio >= 1.45) {
+          return { width: 1280, height: 800, label: 'Auto' };
+        } else {
+          return { width: 1024, height: 768, label: 'Auto' };
+        }
+      }
+    }
+
+    const initialDim = calculateResponsiveDimensions(currentAspectMode);
+
+    Reveal.initialize({
+      width: initialDim.width,
+      height: initialDim.height,
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2.0,
+      hash: true,
+      slideNumber: false,
+      controls: false,
+      progress: false,
+      center: true,
+      touch: true,
+      transition: 'slide',
+      backgroundTransition: 'none',
+      plugins: [ RevealNotes, RevealHighlight, RevealMath.KaTeX ]
+    });
+
+    function updateDeckState(event) {
+      const indices = event ? { h: event.indexh, v: event.indexv } : Reveal.getIndices();
+      const totalSlides = Reveal.getTotalSlides();
+      const currentIdx = indices ? indices.h : 0;
+
+      const progressBar = document.getElementById('deck-progress-bar');
+      if (progressBar) {
+        const progressPercent = totalSlides > 1 ? (currentIdx / (totalSlides - 1)) * 100 : 0;
+        progressBar.style.width = progressPercent + '%';
+      }
+
+      const currentEl = document.getElementById('deck-slide-current');
+      const totalEl = document.getElementById('deck-slide-total');
+      if (currentEl) currentEl.textContent = String(currentIdx + 1).padStart(2, '0');
+      if (totalEl) totalEl.textContent = String(totalSlides).padStart(2, '0');
+
+      const topicEl = document.getElementById('deck-footer-topic-text');
+      if (topicEl) {
+        if (currentIdx === 0) {
+          topicEl.textContent = 'Modul 01 • Pengenalan Data Analyst';
+        } else {
+          const currentSlide = Reveal.getCurrentSlide();
+          if (currentSlide) {
+            const topicAttr = currentSlide.getAttribute('data-topic');
+            if (topicAttr) {
+              topicEl.textContent = topicAttr;
+            } else {
+              const heading = currentSlide.querySelector('h2') || currentSlide.querySelector('h1');
+              topicEl.textContent = heading ? heading.textContent.trim() : 'Modul 01 • Pengenalan Data Analyst';
+            }
+          }
+        }
+      }
+
+      updateActiveTopicItem(currentIdx);
+    }
+
+    Reveal.on('ready', event => {
+      document.body.classList.add('reveal-ready');
+      updateDeckState(event);
+      buildTopicIndex();
+    });
+    Reveal.on('slidechanged', updateDeckState);
+
+    function buildTopicIndex() {
+      const listEl = document.getElementById('deck-topic-list');
+      if (!listEl) return;
+
+      const slides = document.querySelectorAll('.reveal .slides > section');
+      let htmlStr = '';
+
+      slides.forEach((slide, idx) => {
+        const topicAttr = slide.getAttribute('data-topic');
+        const h1 = slide.querySelector('h1');
+        const h2 = slide.querySelector('h2');
+        let title = topicAttr || (h2 ? h2.textContent.trim() : (h1 ? h1.textContent.trim() : `Slide ${idx + 1}`));
+        const numStr = String(idx + 1).padStart(2, '0');
+
+        htmlStr += `
+          <div class="deck-topic-item" data-slide-index="${idx}" onclick="jumpToSlide(${idx})">
+            <span class="deck-topic-num">${numStr}</span>
+            <span class="deck-topic-name" title="${title}">${title}</span>
+          </div>
+        `;
+      });
+
+      listEl.innerHTML = htmlStr;
+      const currentIdx = Reveal.getIndices ? Reveal.getIndices().h : 0;
+      updateActiveTopicItem(currentIdx);
+    }
+
+    function updateActiveTopicItem(currentIdx) {
+      document.querySelectorAll('.deck-topic-item').forEach(item => {
+        const idx = parseInt(item.getAttribute('data-slide-index'), 10);
+        item.classList.toggle('active', idx === currentIdx);
+      });
+    }
+
+    function toggleTopicPopover(e) {
+      if (e) e.stopPropagation();
+      const popover = document.getElementById('deck-topic-popover');
+      const btn = document.getElementById('deck-footer-topic');
+      if (!popover) return;
+
+      const isActive = popover.classList.toggle('active');
+      if (btn) btn.classList.toggle('active', isActive);
+
+      if (isActive) {
+        const activeItem = popover.querySelector('.deck-topic-item.active');
+        if (activeItem) {
+          activeItem.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        }
+        const searchInput = document.getElementById('deck-topic-search');
+        if (searchInput) {
+          searchInput.value = '';
+          filterTopicList('');
+          setTimeout(() => searchInput.focus(), 80);
+        }
+      }
+    }
+
+    function closeTopicPopover() {
+      const popover = document.getElementById('deck-topic-popover');
+      const btn = document.getElementById('deck-footer-topic');
+      if (popover) popover.classList.remove('active');
+      if (btn) btn.classList.remove('active');
+    }
+
+    function jumpToSlide(index) {
+      Reveal.slide(index);
+      closeTopicPopover();
+    }
+
+    function filterTopicList(query) {
+      const q = (query || '').toLowerCase().trim();
+      const items = document.querySelectorAll('.deck-topic-item');
+      let visibleCount = 0;
+
+      items.forEach(item => {
+        const num = (item.querySelector('.deck-topic-num') || {}).textContent || '';
+        const name = (item.querySelector('.deck-topic-name') || {}).textContent || '';
+        const matches = !q || num.toLowerCase().includes(q) || name.toLowerCase().includes(q);
+        item.style.display = matches ? 'grid' : 'none';
+        if (matches) visibleCount++;
+      });
+    }
+
+    function setAspectMode(mode) {
+      currentAspectMode = mode;
+      localStorage.setItem('reveal_aspect_mode', mode);
+
+      const dim = calculateResponsiveDimensions(mode);
+
+      Reveal.configure({
+        width: dim.width,
+        height: dim.height,
+        margin: 0.04,
+        minScale: 0.2,
+        maxScale: 2.0
+      });
+
+      document.body.classList.remove('aspect-16-9', 'aspect-16-10', 'aspect-4-3', 'aspect-mobile');
+      if (mode === 'auto') {
+        if (window.innerWidth <= 768) document.body.classList.add('aspect-mobile');
+      } else {
+        document.body.classList.add('aspect-' + mode);
+      }
+
+      const labelEl = document.getElementById('aspect-label');
+      if (labelEl) labelEl.textContent = dim.label;
+
+      document.querySelectorAll('.dropdown-item').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-aspect') === mode);
+      });
+
+      closeAspectDropdown();
+      setTimeout(() => Reveal.layout(), 50);
+    }
+
+    function toggleAspectDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('aspect-menu');
+      if (menu) menu.classList.toggle('active');
+    }
+
+    function closeAspectDropdown() {
+      const menu = document.getElementById('aspect-menu');
+      if (menu) menu.classList.remove('active');
+    }
+
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) closeAspectDropdown();
+      if (!e.target.closest('#deck-topic-popover') && !e.target.closest('#deck-footer-topic')) closeTopicPopover();
+    });
+
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        if (currentAspectMode === 'auto') {
+          const dim = calculateResponsiveDimensions('auto');
+          const cfg = Reveal.getConfig();
+          if (cfg.width !== dim.width || cfg.height !== dim.height) {
+            Reveal.configure({ width: dim.width, height: dim.height });
+            const labelEl = document.getElementById('aspect-label');
+            if (labelEl) labelEl.textContent = dim.label;
+            Reveal.layout();
+          }
+        }
+      }, 200);
+    });
+
+    function openShortcutsModal() {
+      document.getElementById('shortcuts-modal').classList.add('active');
+    }
+
+    function closeShortcutsModal(event) {
+      if (!event || event.target.id === 'shortcuts-modal' || event.target.classList.contains('modal-close')) {
+        document.getElementById('shortcuts-modal').classList.remove('active');
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        const popover = document.getElementById('deck-topic-popover');
+        if (popover && popover.classList.contains('active')) {
+          e.preventDefault();
+          e.stopPropagation();
+          closeTopicPopover();
+          return;
+        }
+      }
+      if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+        const modal = document.getElementById('shortcuts-modal');
+        modal.classList.toggle('active');
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', function() {
+      setAspectMode(currentAspectMode);
+    });
+  </script>
+
+</body>
+</html>
+
